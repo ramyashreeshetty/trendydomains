@@ -383,6 +383,22 @@ section{position:relative;}
 .blockrow em{font-style:normal;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;opacity:.55;white-space:nowrap;}
 
 /* ===========================================================================
+   RATIO BAR: makes "under one percent" visible rather than stated
+   =========================================================================== */
+.ratio{max-width:880px;margin:40px auto 0;}
+.ratio-track{display:flex;height:54px;border:2px solid var(--outline);border-radius:9999px;overflow:hidden;
+  box-shadow:6px 6px 0 var(--shadow);background:var(--cream);}
+.ratio-cut{flex:0 0 99.03%;background:var(--coral);display:flex;align-items:center;justify-content:center;
+  border-right:2px solid var(--outline);}
+.ratio-cut span{font-family:var(--f-body);font-size:13px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink);}
+.ratio-keep{flex:1;background:var(--lime);}
+.ratio-legend{display:flex;justify-content:center;gap:clamp(18px,3vw,44px);margin-top:16px;flex-wrap:wrap;}
+.ratio-legend span{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;opacity:.62;}
+.ratio-legend i{width:13px;height:13px;border-radius:50%;border:2px solid var(--outline);flex:none;}
+
+/* ===========================================================================
    SOLD GRID: the closing visual: real names, real prices
    =========================================================================== */
 .soldgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:12px;}
@@ -440,6 +456,7 @@ section{position:relative;}
   <a href="#board"    data-t="The board"></a>
   <a href="#architecture" data-t="Architecture"></a>
   <a href="#engine"   data-t="The engine"></a>
+  <a href="#refusal"  data-t="The refusal"></a>
   <a href="#gate"     data-t="The gate"></a>
   <a href="#bidding"  data-t="Bidding system"></a>
   <a href="#business" data-t="Why it matters"></a>
@@ -939,16 +956,29 @@ section{position:relative;}
 </section>
 
 <!-- =====================================================================
-     THE REFUSAL: one line, then move on
+     THE REFUSAL
+     The pipeline has just ended on 172 twice, so this slide leads with the
+     number that is NOT already on screen: what got thrown away.
      ===================================================================== -->
-<section class="chapter" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+<section class="chapter fitpage" id="refusal" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
   <div class="wrap" style="text-align:center;">
-    <h1 data-rv style="max-width:24ch;margin:0 auto;">
-      <span class="num" style="font-size:inherit;">17,726</span> in.
-      <span class="num" style="font-size:inherit;color:var(--coral);">172</span> out.
-    </h1>
-    <p class="lede" data-rv data-d="2" style="margin:26px auto 0;max-width:48ch;">
-      Under one percent. Generating names is trivial. The engine's real output is everything it refused to list.
+    <div data-rv><span class="pill f-lav">What it threw away</span></div>
+    <div class="num num-xl" data-rv data-d="1" style="color:var(--coral);margin-top:26px;">17,554</div>
+    <div class="label" data-rv data-d="2" style="margin-top:14px;">Keywords the engine refused to turn into a listing</div>
+
+    <div class="ratio" data-rv data-d="3">
+      <div class="ratio-track">
+        <div class="ratio-cut"><span>99.03% refused</span></div>
+        <div class="ratio-keep"></div>
+      </div>
+      <div class="ratio-legend">
+        <span><i style="background:var(--coral);"></i>Never reached a human</span>
+        <span><i style="background:var(--lime);"></i>172 listed &middot; 0.97%</span>
+      </div>
+    </div>
+
+    <p class="lede" data-rv data-d="3" style="margin:34px auto 0;max-width:50ch;">
+      Generating names is trivial. Deciding which ones a person never sees is the product.
     </p>
   </div>
 </section>
