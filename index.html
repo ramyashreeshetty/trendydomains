@@ -227,6 +227,7 @@ section{position:relative;}
 .pipe-steps{display:flex;justify-content:center;gap:8px;margin-top:16px;}
 .pipe-steps i{width:26px;height:5px;border-radius:9999px;background:rgba(26,26,26,.16);transition:background .3s;}
 .pipe-steps i.on{background:var(--coral);}
+.pipe-note{max-width:620px;margin:16px auto 0;font-size:13px;line-height:1.5;opacity:.55;text-align:center;}
 
 /* ===========================================================================
    SYSTEM ARCHITECTURE DIAGRAM
@@ -399,6 +400,18 @@ section{position:relative;}
 .ratio-legend i{width:13px;height:13px;border-radius:50%;border:2px solid var(--outline);flex:none;}
 
 /* ===========================================================================
+   EMPTY PRODUCT SHOT: deliberately plain so it reads as a reserved slot
+   rather than a broken image. Delete with the markup when the shot lands.
+   =========================================================================== */
+.shot-empty{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:var(--cream);}
+.shot-mark{width:56px;height:56px;border-radius:50%;border:2px dashed var(--outline);
+  display:flex;align-items:center;justify-content:center;font-family:var(--f-display);
+  font-size:26px;font-weight:700;opacity:.45;margin-bottom:16px;}
+.shot-empty .label{opacity:.4;}
+
+/* ===========================================================================
    SOLD GRID: the closing visual: real names, real prices
    =========================================================================== */
 .soldgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:12px;}
@@ -452,11 +465,9 @@ section{position:relative;}
   <a href="#example"  data-t="One of them"></a>
   <a href="#problem"  data-t="The problem"></a>
   <a href="#proof"    data-t="The proof"></a>
-  <a href="#insight"  data-t="The insight"></a>
   <a href="#board"    data-t="The board"></a>
   <a href="#architecture" data-t="Architecture"></a>
   <a href="#engine"   data-t="The engine"></a>
-  <a href="#refusal"  data-t="The refusal"></a>
   <a href="#gate"     data-t="The gate"></a>
   <a href="#bidding"  data-t="Bidding system"></a>
   <a href="#business" data-t="Why it matters"></a>
@@ -634,23 +645,17 @@ section{position:relative;}
       <p class="sm" style="margin-top:12px;opacity:.55;">Every dot is a name somebody could register this morning. The coral ones are the only ones anybody is thinking about.</p>
     </div>
 
-    <div class="grid3" style="margin-top:40px;">
+    <div class="grid2" style="margin-top:40px;">
       <div class="card" data-rv data-d="1">
         <div class="num num-xl" style="color:var(--coral);" data-count="12.4" data-suffix="M">0</div>
         <div class="label" style="margin-top:14px;">Names already taken, reserved or premium</div>
-        <p class="sm" style="margin-top:10px;">What is left is effectively unbounded.</p>
+        <p class="sm" style="margin-top:10px;">Everything left is effectively unbounded. Supply has never been the constraint.</p>
         <div class="src">Radix inventory tables &middot; read 16 Sep 2026</div>
       </div>
       <div class="card" data-rv data-d="2">
-        <div class="num num-xl" style="color:var(--sky);">314</div>
-        <div class="label" style="margin-top:14px;">Cheap extensions that renew above their offer price</div>
-        <p class="sm" style="margin-top:10px;">Discount to acquire, recover on renewal. It buys registrations, not attachment.</p>
-        <div class="src">register.domains, 2026</div>
-      </div>
-      <div class="card" data-rv data-d="3">
         <div class="num num-xl" style="color:var(--violet);">36&times;</div>
         <div class="label" style="margin-top:14px;">What the same asset fetches once somebody wants it</div>
-        <p class="sm" style="margin-top:10px;">A $549 median resale against a $15 retail registration. The price was never the constraint.</p>
+        <p class="sm" style="margin-top:10px;">A $549 median resale against a $15 registration. Price was never the constraint either.</p>
         <div class="src">NameBio &amp; Sedo, 2024</div>
       </div>
     </div>
@@ -696,82 +701,36 @@ section{position:relative;}
   </div>
 </section>
 
-<!-- =====================================================================
-     BEAT TWO: THE INSIGHT
-     SAY: slow down. This is what everything rests on.
-     ===================================================================== -->
-<section class="chapter fitpage" id="insight">
-  <div class="glow a"></div>
-  <div class="wrap" style="position:relative;z-index:2;text-align:center;">
-    <h1 data-rv style="margin:0 auto;max-width:20ch;">
-      A domain has no scarcity of its own.<br>
-      <span class="hl" style="margin-top:.35em;">Attention is the thing that runs out.</span>
-    </h1>
-
-    <div data-rv data-d="2" style="margin:44px auto 0;max-width:880px;">
-      <svg viewBox="0 0 800 270" style="width:100%;height:auto;overflow:visible;" role="img"
-           aria-label="A trend spikes then decays; the auction window sits inside the spike.">
-        <!-- the window in which anybody cares -->
-        <rect x="150" y="18" width="190" height="200" rx="14" fill="#E85D4E" opacity=".10"/>
-        <rect x="150" y="18" width="190" height="200" rx="14" fill="none"
-              stroke="#1E1E1E" stroke-width="2" stroke-dasharray="7 6" opacity=".55"/>
-        <!-- area under the attention curve -->
-        <path d="M40,218 C92,218 132,58 182,50 C242,42 302,120 382,162 C472,204 604,214 760,218 L760,218 L40,218 Z"
-              fill="#F2D160" opacity=".45"/>
-        <!-- the curve itself -->
-        <path d="M40,218 C92,218 132,58 182,50 C242,42 302,120 382,162 C472,204 604,214 760,218"
-              fill="none" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round"/>
-        <!-- baseline -->
-        <line x1="40" y1="218" x2="760" y2="218" stroke="#1E1E1E" stroke-width="2" opacity=".45"/>
-        <!-- peak marker -->
-        <circle cx="182" cy="50" r="8" fill="#E85D4E" stroke="#1E1E1E" stroke-width="2.5"/>
-        <text x="245" y="248" text-anchor="middle" font-family="Space Grotesk, sans-serif"
-              font-size="14" font-weight="600" letter-spacing="1.6" fill="#1A1A1A" opacity=".75">WE SELL HERE</text>
-        <text x="40" y="248" font-family="Space Grotesk, sans-serif" font-size="13"
-              font-weight="500" letter-spacing="1.2" fill="#1A1A1A" opacity=".45">TREND STARTS</text>
-        <text x="760" y="248" text-anchor="end" font-family="Space Grotesk, sans-serif" font-size="13"
-              font-weight="500" letter-spacing="1.2" fill="#1A1A1A" opacity=".45">NOBODY CARES</text>
-      </svg>
-    </div>
-
-    <p class="lede" data-rv data-d="3" style="margin:34px auto 0;max-width:56ch;">
-      There is always another name. What expires is the reason anyone wanted <em>this</em> one.
-      That isn't a flaw in the input, it's the entire product.
-    </p>
-  </div>
-</section>
 
 <!-- =====================================================================
-     THE BOARD: screenshot + live demo handoff
+     THE BOARD
+     The frame below is the product-shot slot. To fill it, drop the image in
+     as pitch/img/board.png and replace the whole <div class="shot-empty">
+     block with:  <img src="img/board.png" alt="The live auction board">
+     Nothing else needs to change; the frame already crops and positions it.
      ===================================================================== -->
 <section class="chapter fitpage" id="board">
-  <div class="wrap">
-    <div class="grid2" style="align-items:center;">
-      <div>
-        <div data-rv><span class="pill f-lav">what we built</span></div>
-        <h1 data-rv data-d="1" style="margin-top:22px;">The board.</h1>
-        <div data-rv data-d="2" style="margin:24px 0;"><div class="aline"></div></div>
-        <p data-rv data-d="3" style="max-width:44ch;">
-          Four regions, each with its own pool and its own screen. Ten Radix TLDs in play.
-          Every name verified against live inventory at the moment it was listed.
-        </p>
-        <div data-rv data-d="4" style="margin-top:26px;display:flex;gap:9px;flex-wrap:wrap;">
-          <span class="pill xs">IN &middot; 58</span><span class="pill xs">US &middot; 45</span>
-          <span class="pill xs">AE &middot; 41</span><span class="pill xs">WW &middot; 28</span>
-          <span class="pill xs f-yellow"><span class="num" style="font-size:11px;">28</span>&nbsp;live now</span>
-        </div>
-      </div>
-      <div data-rv data-d="2">
-        <!-- Replace the .inner block with: <img src="img/board.png" alt="Live auction board"> -->
-        <div class="browser">
+  <div class="wrap" style="text-align:center;">
+    <div data-rv><span class="pill f-lav">What we built</span></div>
+    <h1 data-rv data-d="1" style="margin:18px auto 0;">The board.</h1>
+    <p data-rv data-d="2" style="margin:14px auto 0;max-width:58ch;">
+      Four regional boards, ten Radix extensions, every name verified against live inventory the moment it was listed.
+    </p>
+    <div data-rv data-d="2" style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <span class="pill xs">India</span><span class="pill xs">United States</span>
+      <span class="pill xs">UAE</span><span class="pill xs">Worldwide</span>
+      <span class="pill xs f-yellow"><span class="num" style="font-size:11px;">28</span>&nbsp;auctions live now</span>
+    </div>
+
+    <div data-rv data-d="3" style="margin:22px auto 0;max-width:858px;">
+      <div class="browser">
         <div class="browser-bar"><i></i><i></i><i></i><span class="url">trendydomains.radix.site</span></div>
-        <div class="frame" style="aspect-ratio:16/10;">
-          <div class="inner">
-            <span class="pill xs">Screenshot slot</span>
-            <div class="h3" style="max-width:24ch;">Live auction board: full page, region tabs visible</div>
-            <div class="label">img/board.png</div>
+        <div class="frame" style="aspect-ratio:16/9;">
+          <div class="shot-empty">
+            <div class="shot-mark">+</div>
+            <div class="h3">Screenshot goes here</div>
+            <div class="label" style="margin-top:8px;">img/board.png</div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -951,37 +910,12 @@ section{position:relative;}
       <div class="num num-xl big" id="pipeCount">17,726</div>
       <div class="pipe-track"><div class="pipe-fill" id="pipeFill"></div></div>
       <div class="pipe-steps" id="pipeSteps"></div>
+      <p class="pipe-note"><span class="num" style="font-size:15px;">17,554</span> refused.
+        Generating names is trivial; deciding which ones a person never sees is the product.</p>
     </div>
   </div>
 </section>
 
-<!-- =====================================================================
-     THE REFUSAL
-     The pipeline has just ended on 172 twice, so this slide leads with the
-     number that is NOT already on screen: what got thrown away.
-     ===================================================================== -->
-<section class="chapter fitpage" id="refusal" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
-  <div class="wrap" style="text-align:center;">
-    <div data-rv><span class="pill f-lav">What it threw away</span></div>
-    <div class="num num-xl" data-rv data-d="1" style="color:var(--coral);margin-top:26px;">17,554</div>
-    <div class="label" data-rv data-d="2" style="margin-top:14px;">Keywords the engine refused to turn into a listing</div>
-
-    <div class="ratio" data-rv data-d="3">
-      <div class="ratio-track">
-        <div class="ratio-cut"><span>99.03% refused</span></div>
-        <div class="ratio-keep"></div>
-      </div>
-      <div class="ratio-legend">
-        <span><i style="background:var(--coral);"></i>Never reached a human</span>
-        <span><i style="background:var(--lime);"></i>172 listed &middot; 0.97%</span>
-      </div>
-    </div>
-
-    <p class="lede" data-rv data-d="3" style="margin:34px auto 0;max-width:50ch;">
-      Generating names is trivial. Deciding which ones a person never sees is the product.
-    </p>
-  </div>
-</section>
 
 <!-- =====================================================================
      THE GATE: blocked vs listed
@@ -1108,16 +1042,11 @@ section{position:relative;}
     <div data-rv><span class="pill f-lav">why a registry cares</span></div>
     <h1 data-rv data-d="1" style="margin-top:22px;max-width:18ch;">There is a market for this. None of it is primary.</h1>
 
-    <div class="grid3" style="margin-top:44px;">
+    <div class="grid2" style="margin-top:44px;">
       <div class="card" data-rv data-d="1">
         <div class="num num-md" style="color:var(--coral);">$185M</div>
         <div class="label" style="margin-top:12px;">Domains sold on the aftermarket in 2024</div>
-        <p class="sm" style="margin-top:12px;">Across 144,700 sales. Dollar volume up 32.8% year on year.</p>
-      </div>
-      <div class="card" data-rv data-d="2">
-        <div class="num num-md" style="color:var(--sky);">$549</div>
-        <div class="label" style="margin-top:12px;">Median sale price at Sedo</div>
-        <p class="sm" style="margin-top:12px;">Against $10&ndash;$20 for the same asset at retail. Roughly a 30&times; spread.</p>
+        <p class="sm" style="margin-top:12px;">Across 144,700 sales, at a $549 median. Dollar volume up 32.8% year on year.</p>
       </div>
       <div class="card" data-rv data-d="3">
         <div class="num num-md" style="color:var(--violet);">100%</div>
