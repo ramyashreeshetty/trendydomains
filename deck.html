@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrendBid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   THEME TOKENS — Capsule
+   Pill geometry, 2px ink outline, candy palette
+   on a sun-bleached cream canvas.
+   =========================================== */
+:root{
+  --cream:#F5F5F0; --ink:#1A1A1A; --outline:#1E1E1E; --white:#FFFFFF;
+  --coral:#E85D4E; --lime:#C4D94E; --lavender:#C5B5E0; --sky:#8BB4F7;
+  --violet:#A06CE8; --yellow:#F2D160; --peach:#F5B895; --mint:#A8E6CF;
+  --shadow:rgba(26,26,26,0.08);
+
+  --font-display:"Bodoni Moda", serif;
+  --font-body:"Space Grotesk", sans-serif;
+
+  /* Type scale authored at the 1920x1080 stage size */
+  --t-display:118px; --t-closing:86px; --t-headline:62px; --t-section:54px;
+  --t-card:30px; --t-stat:72px; --t-body:24px; --t-body-sm:20px;
+  --t-subtitle:20px; --t-pill-md:17px; --t-pill-sm:14px; --t-label:15px; --t-mini:13px;
+
+  --pad-lg:80px 110px;
+  --stage-bg:#0e0e0d;
+  --slide-bg:#F5F5F0;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   =========================================== */
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--stage-bg,#000);}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:var(--stage-bg,#000);}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--slide-bg,#fff);}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none;background:var(--slide-bg,#fff);transition:opacity .6s cubic-bezier(.4,0,.2,1);}
+.slide.active,.slide.visible{visibility:visible;opacity:1;pointer-events:auto;z-index:1;}
+img,video,canvas,svg{max-width:100%;max-height:100%;}
+.deck-controls{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:1000;}
+@media print{
+  html,body{width:1920px;height:auto;overflow:visible;background:#fff;}
+  .deck-viewport{position:static;overflow:visible;background:#fff;}
+  .deck-stage{position:static;width:auto;height:auto;transform:none!important;background:none;}
+  .slide{position:relative;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;width:1920px;height:1080px;break-after:page;page-break-after:always;}
+  .slide:last-child{break-after:auto;page-break-after:auto;}
+  .deck-controls{display:none!important;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}
+}
+
+/* ===========================================
+   ATMOSPHERE — radial glows + grain
+   Baseline canvas layers, present on every slide.
+   =========================================== */
+.slide::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 88% 8%, rgba(232,93,78,.10), transparent 55%),
+    radial-gradient(ellipse at 6% 90%, rgba(139,180,247,.12), transparent 55%);
+}
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.04;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===========================================
+   LAYOUT WRAPPERS
+   .wrap never sits on .slide itself so the
+   visibility toggle is never overridden.
+   =========================================== */
+.wrap{position:relative;z-index:2;width:100%;height:100%;padding:var(--pad-lg);display:flex;flex-direction:column;}
+.wrap.center{align-items:center;justify-content:center;text-align:center;}
+.wrap.mid{justify-content:center;}
+.row{display:flex;gap:44px;}
+.row.tight{gap:28px;}
+.grow{flex:1;}
+
+/* ===========================================
+   TYPOGRAPHY
+   Bodoni for every display role, always ink,
+   always negative tracking, never uppercase.
+   =========================================== */
+.display{font-family:"Archivo",sans-serif;font-variation-settings:"wdth" 125;font-size:var(--t-display);
+  font-weight:800;line-height:.88;letter-spacing:-.035em;color:var(--ink);}
+.closing{font-family:var(--font-display);font-size:var(--t-closing);font-weight:800;line-height:.95;letter-spacing:-.03em;color:var(--ink);}
+.headline,.section-headline,.closing,.card-headline{font-optical-sizing:none;}
+.headline{font-family:var(--font-display);font-size:var(--t-headline);font-weight:700;line-height:1.05;letter-spacing:-.02em;color:var(--ink);}
+.section-headline{font-family:var(--font-display);font-size:var(--t-section);font-weight:700;line-height:1.05;letter-spacing:-.01em;color:var(--ink);}
+.card-headline{font-family:var(--font-display);font-size:var(--t-card);font-weight:700;line-height:1.1;color:var(--ink);}
+.statnum{font-family:var(--font-display);font-size:var(--t-stat);font-weight:800;line-height:1;letter-spacing:-.03em;}
+.body{font-family:var(--font-body);font-size:var(--t-body);font-weight:400;line-height:1.6;color:var(--ink);opacity:.68;}
+.body-sm{font-family:var(--font-body);font-size:var(--t-body-sm);font-weight:400;line-height:1.55;color:var(--ink);opacity:.68;}
+.subtitle{font-family:var(--font-body);font-size:var(--t-subtitle);font-weight:400;line-height:1.4;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);opacity:.62;}
+.label{font-family:var(--font-body);font-size:var(--t-label);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);opacity:.55;}
+.mini{font-family:var(--font-body);font-size:var(--t-mini);font-weight:500;letter-spacing:.08em;text-transform:uppercase;}
+
+/* ===========================================
+   PILLS — the universal container
+   =========================================== */
+.pill{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--outline);border-radius:9999px;
+  font-family:var(--font-body);font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:var(--ink);}
+.pill.lg{padding:20px 52px;font-size:var(--t-pill-md);}
+.pill.md{padding:14px 36px;font-size:var(--t-pill-md);}
+.pill.sm{padding:8px 22px;font-size:var(--t-pill-sm);}
+.pill.xs{padding:7px 18px;font-size:var(--t-mini);}
+.f-yellow{background:var(--yellow);} .f-coral{background:var(--coral);} .f-lime{background:var(--lime);}
+.f-sky{background:var(--sky);} .f-lav{background:var(--lavender);} .f-violet{background:var(--violet);}
+.f-peach{background:var(--peach);} .f-mint{background:var(--mint);} .f-white{background:var(--white);}
+
+.tag{align-self:flex-start;margin-bottom:26px;}
+.wrap.center .tag{align-self:center;}
+.aline{width:60px;height:4px;background:var(--coral);border-radius:9999px;margin:26px 0;}
+.wrap.center .aline{margin:26px auto;}
+.aline.wide{width:80px;}
+
+/* ===========================================
+   CARDS, STATS, BARS
+   =========================================== */
+.card{background:var(--white);border:2px solid var(--outline);border-radius:2rem;padding:38px 34px;box-shadow:8px 8px 0 var(--shadow);}
+.card-icon{width:60px;height:60px;border-radius:50%;border:2px solid var(--outline);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:26px;font-weight:700;margin-bottom:22px;}
+.stat{background:var(--white);border:2px solid var(--outline);border-radius:2rem;padding:34px 30px;box-shadow:6px 6px 0 var(--shadow);flex:1;}
+.stat .accentbar{width:40px;height:4px;border-radius:9999px;margin-top:18px;}
+.bar-track{height:44px;background:var(--cream);border:2px solid var(--outline);border-radius:9999px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:9999px;border-right:2px solid var(--outline);display:flex;align-items:center;justify-content:flex-end;
+  padding-right:18px;font-family:var(--font-body);font-size:var(--t-mini);font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+.barrow{display:flex;align-items:center;gap:22px;margin-bottom:16px;}
+.barrow .bl{width:250px;font-family:var(--font-body);font-size:16px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;opacity:.6;}
+.barrow .bt{flex:1;}
+
+/* ===========================================
+   FLOW DIAGRAM
+   =========================================== */
+.node{background:var(--white);border:2px solid var(--outline);border-radius:9999px;padding:18px 32px;box-shadow:6px 6px 0 var(--shadow);
+  font-family:var(--font-body);font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+.conn{width:46px;height:4px;background:var(--outline);position:relative;flex:none;}
+.conn::after{content:"";position:absolute;right:-2px;top:-7px;border-left:12px solid var(--outline);border-top:9px solid transparent;border-bottom:9px solid transparent;}
+.flowline{display:flex;align-items:center;gap:14px;}
+
+/* ===========================================
+   SCREENSHOT FRAME
+   Drop an <img> inside to replace the placeholder.
+   =========================================== */
+.frame{border:2px solid var(--outline);border-radius:2rem;box-shadow:12px 12px 0 var(--shadow);overflow:hidden;position:relative;
+  background:linear-gradient(135deg,var(--lavender) 0%,var(--sky) 50%,var(--mint) 100%);}
+.frame::after{content:"";position:absolute;inset:0;opacity:.15;
+  background-image:radial-gradient(circle,var(--ink) 1.5px,transparent 1.5px);background-size:22px 22px;}
+.frame .inner{position:absolute;inset:22px;border:2px dashed var(--outline);border-radius:1.5rem;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px;z-index:2;text-align:center;padding:30px;}
+.frame img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:top center;z-index:3;}
+
+/* ===========================================
+   DECORATIVE WALLPAPER PILLS
+   Atmosphere only. No shadow, no meaning.
+   =========================================== */
+.deco{position:absolute;z-index:1;border:2px solid var(--outline);border-radius:9999px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-body);font-size:var(--t-pill-sm);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);}
+.deco.circle{border-radius:50%;}
+
+/* ===========================================
+   PLACEHOLDER MARKER
+   Anything wrapped in .ph is still a guess.
+   Delete the class once the number is real.
+   =========================================== */
+.ph{color:var(--coral);border-bottom:3px dotted var(--coral);font-style:normal;}
+
+/* ===========================================
+   ANIMATION — one staggered reveal per slide
+   =========================================== */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.slide.visible .reveal{opacity:1;transform:translateY(0);}
+.slide.visible .reveal:nth-child(1){transition-delay:.08s}
+.slide.visible .reveal:nth-child(2){transition-delay:.16s}
+.slide.visible .reveal:nth-child(3){transition-delay:.24s}
+.slide.visible .reveal:nth-child(4){transition-delay:.32s}
+.slide.visible .reveal:nth-child(5){transition-delay:.40s}
+.slide.visible .reveal:nth-child(6){transition-delay:.48s}
+.slide .deco{opacity:0;transform:scale(.8);transition:opacity .6s var(--ease),transform .6s var(--ease);}
+.slide.visible .deco{opacity:1;transform:scale(1);}
+
+/* ===========================================
+   DECK CHROME — outside the stage
+   =========================================== */
+.navdots{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:1000;display:flex;flex-direction:column;gap:12px;}
+.navdots i{width:10px;height:10px;border-radius:50%;border:2px solid #7a7a72;cursor:pointer;transition:background .25s;}
+.navdots i.on{background:var(--coral);border-color:var(--coral);}
+.counter{position:fixed;right:26px;bottom:22px;z-index:1000;font-family:var(--font-body);font-size:13px;letter-spacing:.14em;color:#8a8a80;}
+.hint{position:fixed;left:26px;bottom:22px;z-index:1000;font-family:var(--font-body);font-size:13px;letter-spacing:.14em;color:#8a8a80;}
+.edit-hotzone{position:fixed;top:0;left:0;width:80px;height:80px;z-index:10000;}
+.edit-toggle{position:fixed;top:18px;left:18px;z-index:10001;width:44px;height:44px;border-radius:50%;border:2px solid var(--outline);
+  background:var(--yellow);cursor:pointer;font-size:18px;display:none;}
+.edit-toggle.show{display:block;}
+body.editing .slide.active [contenteditable]{outline:2px dashed var(--coral);outline-offset:4px;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- ============================================================
+     SLIDE 1 — COVER
+     SAY: "We're Last Level Maniacs. We built TrendBid: a daily
+     auction board where whatever the internet is talking about
+     this morning becomes a Radix domain you can bid on."
+     ============================================================ -->
+<section class="slide active">
+  <div class="deco f-coral" style="left:150px;top:150px;width:130px;height:52px;transform:rotate(-12deg);">TRENDS</div>
+  <div class="deco f-lime" style="right:190px;top:120px;width:120px;height:50px;transform:rotate(9deg);">.STORE</div>
+  <div class="deco f-sky circle" style="left:230px;bottom:190px;width:96px;height:96px;transform:rotate(-6deg);">LIVE</div>
+  <div class="deco f-lav" style="right:140px;bottom:230px;width:150px;height:56px;transform:rotate(15deg);">.ONLINE</div>
+  <div class="deco f-peach" style="left:90px;top:520px;width:110px;height:48px;transform:rotate(22deg);">BID</div>
+  <div class="deco f-mint" style="right:96px;top:480px;width:128px;height:50px;transform:rotate(-18deg);">.TECH</div>
+  <div class="deco f-violet" style="left:50%;bottom:120px;width:118px;height:48px;transform:translateX(-50%) rotate(7deg);">DAY 1</div>
+  <div class="wrap center">
+    <h1 class="display reveal">TrendBid</h1>
+    <div class="aline reveal"></div>
+    <p class="subtitle reveal" style="max-width:1250px;text-transform:none;letter-spacing:0;font-size:46px;opacity:.75;line-height:1.3;">Trends expire. Domains don't.<br>We auction the overlap.</p>
+    <div class="row tight reveal" style="margin-top:44px;">
+      <span class="pill sm f-white"><span style="opacity:.45;">Team:</span>&nbsp;Last Level Maniacs</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 2 — THE HOOK
+     SAY: Trace ONE name end to end. "This keyword started
+     trending X hours ago. This domain went live on our board
+     Y minutes later. It has been sitting unsold in Radix
+     inventory the entire time."
+     DO NOT read the slide. Point at the three pills.
+     ============================================================ -->
+<section class="slide">
+  <div class="deco f-peach" style="right:150px;top:180px;width:126px;height:50px;transform:rotate(11deg);">TODAY</div>
+  <div class="deco f-mint circle" style="right:240px;bottom:200px;width:92px;height:92px;transform:rotate(-8deg);">ONE</div>
+  <div class="deco f-sky" style="left:60px;bottom:150px;width:118px;height:48px;transform:rotate(-15deg);">LIVE</div>
+  <div class="wrap mid">
+    <span class="pill sm f-lav tag reveal">The hook</span>
+    <h2 class="headline reveal" style="max-width:1300px;">This name sat unsold for <span class="ph">[N] years</span>.<br>It took <span class="ph">[N] minutes</span> to become a live auction.</h2>
+    <div class="flowline reveal" style="margin-top:56px;">
+      <div class="node f-yellow">Keyword: <span class="ph">[trending term]</span></div>
+      <div class="conn"></div>
+      <div class="node f-white"><span class="ph">[domain.tld]</span></div>
+      <div class="conn"></div>
+      <div class="node f-coral"><span class="ph">[N]</span> bids &middot; <span class="ph">$[N]</span></div>
+    </div>
+    <p class="body reveal" style="margin-top:50px;max-width:1150px;">Nothing about that name changed. What changed is that today, for a few hours, somebody has a reason to want it.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 3 — BEAT ONE: THE PROBLEM
+     SAY: "A registry's shelf is enormous and completely static.
+     Millions of names, and no reason for anyone to buy one this
+     morning. So the whole industry pulls the only lever it has:
+     price. Down to a dollar ninety-nine."
+     ============================================================ -->
+<section class="slide">
+  <div class="wrap mid">
+    <span class="pill sm f-lav tag reveal">Beat one &middot; the problem</span>
+    <h2 class="section-headline reveal" style="max-width:1350px;">A registry's shelf has no reason to be shopped today.</h2>
+    <div class="row reveal" style="margin-top:56px;">
+      <div class="stat">
+        <div class="statnum" style="color:var(--coral);">11M+</div>
+        <div class="label" style="margin-top:14px;">Names in Radix inventory</div>
+        <div class="accentbar" style="background:var(--coral);"></div>
+      </div>
+      <div class="stat">
+        <div class="statnum" style="color:var(--sky);"><span class="ph">[N]%</span></div>
+        <div class="label" style="margin-top:14px;">Never register at all</div>
+        <div class="accentbar" style="background:var(--sky);"></div>
+      </div>
+      <div class="stat">
+        <div class="statnum" style="color:var(--violet);">$1.99</div>
+        <div class="label" style="margin-top:14px;">The only lever anyone pulls</div>
+        <div class="accentbar" style="background:var(--violet);"></div>
+      </div>
+    </div>
+    <p class="body reveal" style="margin-top:46px;max-width:1250px;">Standard domains are a commodity. Discounting moves volume and destroys margin, and it still doesn't tell a buyer <em>why this name, why now</em>.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 4 — BEAT TWO: THE INSIGHT
+     SAY: Slow down here. This is the idea the whole thing
+     rests on. "A domain has no scarcity of its own — there
+     are always more. Attention is the scarce thing, and it
+     expires. We borrow the expiry."
+     ============================================================ -->
+<section class="slide">
+  <div class="deco f-lime" style="left:120px;top:170px;width:140px;height:54px;transform:rotate(-14deg);">TODAY</div>
+  <div class="deco f-coral circle" style="right:180px;top:140px;width:104px;height:104px;transform:rotate(8deg);">NOW</div>
+  <div class="deco f-sky" style="left:180px;bottom:170px;width:132px;height:52px;transform:rotate(17deg);">EXPIRES</div>
+  <div class="deco f-yellow" style="right:130px;bottom:200px;width:126px;height:52px;transform:rotate(-9deg);">SCARCE</div>
+  <div class="deco f-peach" style="left:52%;top:130px;width:112px;height:46px;transform:rotate(12deg);">ATTENTION</div>
+  <div class="wrap center">
+    <span class="pill sm f-lav reveal" style="margin-bottom:44px;">Beat two &middot; the insight</span>
+    <h2 class="headline reveal" style="max-width:1500px;">A domain has no scarcity of its own.<br><span class="pill md f-lime" style="font-family:var(--font-body);font-size:38px;letter-spacing:.02em;text-transform:none;font-weight:500;margin-top:24px;">Attention is the thing that runs out.</span></h2>
+    <p class="body reveal" style="margin-top:52px;max-width:1150px;">Trends expire. That isn't a flaw in the input — it is the entire product. It manufactures the urgency a domain has never had on its own.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 5 — BEAT THREE: THE BOARD
+     SAY: 20 seconds only. "This is it, live right now."
+     Then STOP TALKING and switch to the live demo.
+     Trace one card backwards: keyword, why it trended,
+     TLD choice, score, current bid.
+     ============================================================ -->
+<section class="slide">
+  <div class="wrap mid">
+    <div class="row" style="align-items:center;height:100%;">
+      <div style="width:620px;flex:none;">
+        <span class="pill sm f-lav tag reveal">Beat three &middot; what we built</span>
+        <h2 class="section-headline reveal">The board.</h2>
+        <div class="aline reveal"></div>
+        <p class="body reveal" style="margin-top:8px;">Four regions. Twelve Radix TLDs. Every name on it is available, on-brand and legally screened — checked the moment it was listed.</p>
+        <div class="row tight reveal" style="margin-top:34px;flex-wrap:wrap;gap:12px;">
+          <span class="pill xs f-white">WW</span><span class="pill xs f-white">IN</span>
+          <span class="pill xs f-white">AE</span><span class="pill xs f-white">US</span>
+          <span class="pill xs f-yellow">28 live auctions</span>
+        </div>
+      </div>
+      <div class="grow reveal">
+        <div class="frame" style="height:760px;">
+          <!-- Replace the .inner block with: <img src="img/board.png" alt="Live auction board"> -->
+          <div class="inner">
+            <span class="pill sm f-white">Screenshot slot</span>
+            <div class="card-headline" style="max-width:520px;">Live auction board &mdash; full page, region tabs visible</div>
+            <div class="mini" style="opacity:.7;">img/board.png</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 6 — BEAT THREE: THE ENGINE
+     SAY: The one technical slide. Land hard on availability:
+     "We query the real Radix inventory tables — dums, premium,
+     reserved. Eleven million rows. Nothing on that board is
+     a hallucination."
+     ============================================================ -->
+<section class="slide">
+  <div class="wrap mid">
+    <span class="pill sm f-lav tag reveal">Beat three &middot; the engine</span>
+    <h2 class="section-headline reveal">Trends in. Bidable inventory out.</h2>
+    <div class="reveal" style="margin-top:52px;">
+      <div class="flowline" style="margin-bottom:34px;">
+        <div class="node f-yellow">Google Trends + X</div>
+        <div class="conn"></div>
+        <div class="node f-white">Merge &amp; score</div>
+        <div class="conn"></div>
+        <div class="node f-white">LLM screen</div>
+        <div class="conn"></div>
+        <div class="node f-white">Propose domains</div>
+      </div>
+      <div class="flowline">
+        <div class="node f-sky">Availability &middot; 11M rows</div>
+        <div class="conn"></div>
+        <div class="node f-white">Trademark &amp; quality gate</div>
+        <div class="conn"></div>
+        <div class="node f-lime">Candidate pool</div>
+        <div class="conn"></div>
+        <div class="node f-coral">Live board</div>
+      </div>
+    </div>
+    <div class="row reveal" style="margin-top:56px;gap:20px;">
+      <span class="pill sm f-white">Everything slow happens in the batch</span>
+      <span class="pill sm f-white">The board only reads Postgres</span>
+      <span class="pill sm f-yellow">No model, no listing &mdash; it fails closed</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 7 — BEAT THREE: THE QUALITY GATE
+     SAY: This is the slide that separates us from a GPT wrapper.
+     Tell the iPhone story: twelve trademark variants passed the
+     first screen and the final gate caught every one.
+     ============================================================ -->
+<section class="slide">
+  <div class="wrap mid">
+    <span class="pill sm f-lav tag reveal">Beat three &middot; the judgment</span>
+    <h2 class="section-headline reveal">Four layers decide what a bidder is allowed to see.</h2>
+    <div class="row reveal" style="margin-top:46px;">
+      <div class="card grow">
+        <div class="card-icon f-coral">&times;</div>
+        <div class="card-headline">Blocked</div>
+        <p class="body-sm" style="margin-top:14px;"><span class="ph">[blocked.tld]</span></p>
+        <p class="body-sm" style="margin-top:10px;">Trademark risk. Caught by the final gate <em>after</em> it passed the keyword screen &mdash; which is exactly why the layer exists.</p>
+        <div class="row tight" style="margin-top:22px;flex-wrap:wrap;gap:10px;">
+          <span class="pill xs f-white">Trademark</span><span class="pill xs f-white">Named person</span><span class="pill xs f-white">Tragedy</span>
+        </div>
+      </div>
+      <div class="card grow">
+        <div class="card-icon f-lime">&check;</div>
+        <div class="card-headline">Listed &mdash; <span class="ph">[domain.tld]</span></div>
+        <div style="margin-top:22px;">
+          <div class="barrow"><div class="bl">Trend &middot; 0.35</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--coral);">62</div></div></div></div>
+          <div class="barrow"><div class="bl">TLD fit &middot; 0.20</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--lime);">100</div></div></div></div>
+          <div class="barrow"><div class="bl">Brandability &middot; 0.20</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:94%;background:var(--sky);">94</div></div></div></div>
+          <div class="barrow"><div class="bl">Assessed &middot; 0.15</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--violet);">75</div></div></div></div>
+          <div class="barrow" style="margin-bottom:0;"><div class="bl">Durability &middot; 0.10</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--peach);">30</div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 8 — BEAT THREE: THE FUNNEL
+     SAY: "Nine thousand keywords went in. A hundred and
+     thirty-nine names came out. The number that matters is
+     how much we threw away."
+     ============================================================ -->
+<section class="slide">
+  <div class="wrap mid">
+    <span class="pill sm f-lav tag reveal">Beat three &middot; the funnel</span>
+    <h2 class="section-headline reveal">Most of the work is refusal.</h2>
+    <div class="reveal" style="margin-top:52px;max-width:1520px;">
+      <div class="barrow"><div class="bl">Keywords merged</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--sky);">9,313</div></div></div></div>
+      <div class="barrow"><div class="bl">Sent to screen</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--lavender);"><span class="ph">[N]</span></div></div></div></div>
+      <div class="barrow"><div class="bl">Survived screen</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--violet);"><span class="ph">[N]</span></div></div></div></div>
+      <div class="barrow"><div class="bl">Domains proposed</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:28%;background:var(--yellow);"><span class="ph">[N]</span></div></div></div></div>
+      <div class="barrow"><div class="bl">Actually available</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:17%;background:var(--lime);">172</div></div></div></div>
+      <div class="barrow" style="margin-bottom:0;"><div class="bl">In the pool today</div><div class="bt"><div class="bar-track"><div class="bar-fill" style="width:9%;background:var(--coral);">139</div></div></div></div>
+    </div>
+    <p class="body reveal" style="margin-top:46px;max-width:1300px;">A funnel is evidence of judgment. Anyone can generate ten thousand names &mdash; the product is the nine thousand we refused to list.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 9 — BEAT FOUR: THE BUSINESS CASE
+     SAY: This is the slide that wins the room. "Everyone can
+     build a trends scraper. What this actually does is flip a
+     registry from markdown to price discovery."
+     ============================================================ -->
+<section class="slide">
+  <div class="wrap mid">
+    <span class="pill sm f-lav tag reveal">Beat four &middot; why a registry cares</span>
+    <h2 class="section-headline reveal">Auction replaces the discount.</h2>
+    <div class="row reveal" style="margin-top:48px;">
+      <div class="card grow">
+        <div class="card-icon f-peach">A</div>
+        <div class="card-headline">Markdown</div>
+        <p class="body-sm" style="margin-top:16px;">Cut the price until something moves. Margin goes first, the name still carries no story, and you learn nothing about what a buyer would actually have paid.</p>
+      </div>
+      <div class="card grow">
+        <div class="card-icon f-lime">B</div>
+        <div class="card-headline">Auction</div>
+        <p class="body-sm" style="margin-top:16px;">Demand sets the price. Every closed auction is a real willingness-to-pay data point, per TLD, per region &mdash; and the board gives people a reason to come back tomorrow.</p>
+      </div>
+    </div>
+    <div class="row tight reveal" style="margin-top:42px;gap:14px;flex-wrap:wrap;">
+      <span class="pill sm f-white">Price discovery, not price cutting</span>
+      <span class="pill sm f-white">Live demand signal per TLD</span>
+      <span class="pill sm f-yellow">A daily reason to return</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 10 — WHAT'S NEXT
+     SAY: Keep it to 15 seconds. Honest about what is scoped
+     for the hackathon versus what the architecture supports.
+     ============================================================ -->
+<section class="slide">
+  <div class="wrap mid">
+    <span class="pill sm f-lav tag reveal">What's next</span>
+    <h2 class="section-headline reveal">Built as a one-shot. Architected to run forever.</h2>
+    <div class="row reveal" style="margin-top:52px;">
+      <div class="card grow">
+        <div class="card-icon f-coral">I</div>
+        <div class="card-headline">Continuous runs</div>
+        <p class="body-sm" style="margin-top:14px;">The pool is designed to be refilled, not rebuilt. Candidates survive their keyword going quiet, and durability finally starts to mean something.</p>
+      </div>
+      <div class="card grow">
+        <div class="card-icon f-sky">II</div>
+        <div class="card-headline">More regions</div>
+        <p class="body-sm" style="margin-top:14px;">Region is already a first-class column end to end. Adding a market is a source feed and a screen prompt, not a rewrite.</p>
+      </div>
+      <div class="card grow">
+        <div class="card-icon f-lime">III</div>
+        <div class="card-headline">Bids feed pricing</div>
+        <p class="body-sm" style="margin-top:14px;">Winning bids become the registry's own signal for what a category of name is worth &mdash; the part that outlives the auction itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 11 — CLOSING
+     SAY: "Whatever the internet is talking about tomorrow
+     morning is already on the board. Go bid on it."
+     Leave the URL up during Q&A.
+     ============================================================ -->
+<section class="slide">
+  <div class="deco f-yellow" style="left:170px;top:190px;width:132px;height:52px;transform:rotate(-11deg);">BID</div>
+  <div class="deco f-coral circle" style="right:200px;top:170px;width:100px;height:100px;transform:rotate(6deg);">LIVE</div>
+  <div class="deco f-sky" style="left:210px;bottom:200px;width:140px;height:54px;transform:rotate(14deg);">TOMORROW</div>
+  <div class="deco f-mint" style="right:160px;bottom:230px;width:124px;height:50px;transform:rotate(-16deg);">NEXT</div>
+  <div class="deco f-violet" style="left:48%;top:150px;width:116px;height:48px;transform:rotate(10deg);">RADIX</div>
+  <div class="wrap center">
+    <div class="pill lg f-yellow reveal">Thank you</div>
+    <h2 class="closing reveal" style="margin-top:38px;max-width:1450px;">Whatever the internet is talking about tomorrow is already on the board.</h2>
+    <div class="aline wide reveal"></div>
+    <div class="row tight reveal" style="margin-top:20px;">
+      <span class="pill md f-white">trendydomains.radix.site</span>
+      <span class="pill md f-white">Last Level Maniacs</span>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<div class="navdots" id="navDots"></div>
+<div class="counter" id="counter">01 / 11</div>
+<div class="hint">&larr; &rarr; to navigate &middot; E to edit</div>
+<div class="edit-hotzone" id="editHotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">&#9998;</button>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   =========================================== */
+class SlidePresentation{
+  constructor(){
+    this.slides=[...document.querySelectorAll('.slide')];
+    this.stage=document.getElementById('deckStage');
+    this.dots=document.getElementById('navDots');
+    this.counter=document.getElementById('counter');
+    this.current=0;
+    this.restore();                       // must run before slides/dots are cached
+    this.slides=[...document.querySelectorAll('.slide')];
+    this.buildDots();
+    this.setupStageScale();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupWheelNav();
+    this.setupEditing();
+    this.show(0);
+  }
+  buildDots(){
+    this.slides.forEach((_,i)=>{
+      const d=document.createElement('i');
+      d.addEventListener('click',()=>this.show(i));
+      this.dots.appendChild(d);
+    });
+  }
+  /* Render at 1920x1080, scale the whole stage with one transform. */
+  setupStageScale(){
+    const scale=()=>{
+      const f=Math.min(window.innerWidth/1920,window.innerHeight/1080);
+      const x=(window.innerWidth-1920*f)/2, y=(window.innerHeight-1080*f)/2;
+      this.stage.style.transform=`translate(${x}px, ${y}px) scale(${f})`;
+    };
+    scale(); window.addEventListener('resize',scale);
+  }
+  setupKeyboardNav(){
+    document.addEventListener('keydown',e=>{
+      if(document.body.classList.contains('editing')&&e.key!=='Escape')return;
+      if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();this.show(this.current+1);}
+      else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();this.show(this.current-1);}
+      else if(e.key==='Home'){this.show(0);}
+      else if(e.key==='End'){this.show(this.slides.length-1);}
+      else if(e.key==='e'||e.key==='E'){this.toggleEdit();}
+      else if(e.key==='Escape'){this.toggleEdit(false);}
+    });
+  }
+  setupTouchNav(){
+    let x0=null;
+    document.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;},{passive:true});
+    document.addEventListener('touchend',e=>{
+      if(x0===null)return;
+      const dx=e.changedTouches[0].clientX-x0;
+      if(Math.abs(dx)>50)this.show(this.current+(dx<0?1:-1));
+      x0=null;
+    },{passive:true});
+  }
+  setupWheelNav(){
+    let lock=false;
+    document.addEventListener('wheel',e=>{
+      if(lock||Math.abs(e.deltaY)<30)return;
+      lock=true; this.show(this.current+(e.deltaY>0?1:-1));
+      setTimeout(()=>lock=false,700);
+    },{passive:true});
+  }
+  show(i){
+    this.current=Math.max(0,Math.min(i,this.slides.length-1));
+    this.slides.forEach((s,n)=>{
+      s.classList.toggle('active',n===this.current);
+      s.classList.toggle('visible',n===this.current);
+    });
+    [...this.dots.children].forEach((d,n)=>d.classList.toggle('on',n===this.current));
+    const pad=n=>String(n).padStart(2,'0');
+    this.counter.textContent=`${pad(this.current+1)} / ${pad(this.slides.length)}`;
+  }
+  /* -------- Inline editing: JS hover with delay, never a CSS ~ chain -------- */
+  setupEditing(){
+    const hot=document.getElementById('editHotzone'), btn=document.getElementById('editToggle');
+    let t=null;
+    const reveal=()=>{clearTimeout(t);btn.classList.add('show');};
+    const hide=()=>{t=setTimeout(()=>btn.classList.remove('show'),400);};
+    hot.addEventListener('mouseenter',reveal); hot.addEventListener('mouseleave',hide);
+    btn.addEventListener('mouseenter',reveal); btn.addEventListener('mouseleave',hide);
+    btn.addEventListener('click',()=>this.toggleEdit());
+    document.addEventListener('keydown',e=>{
+      if((e.metaKey||e.ctrlKey)&&e.key==='s'&&document.body.classList.contains('editing')){e.preventDefault();this.persist();}
+    });
+  }
+  toggleEdit(force){
+    const on=force!==undefined?force:!document.body.classList.contains('editing');
+    document.body.classList.toggle('editing',on);
+    this.stage.querySelectorAll('h1,h2,p,.node,.pill,.card-headline,.label,.statnum,.bl').forEach(el=>{
+      if(on)el.setAttribute('contenteditable','true'); else el.removeAttribute('contenteditable');
+    });
+    if(!on)this.persist();
+  }
+  persist(){try{localStorage.setItem('trendbid-deck',this.stage.innerHTML);}catch(e){}}
+  restore(){try{const s=localStorage.getItem('trendbid-deck');if(s)this.stage.innerHTML=s;}catch(e){}}
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

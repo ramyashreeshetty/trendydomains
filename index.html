@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trendy Domains</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================================
+   TOKENS: Capsule design system
+   Pill geometry, 2px ink outline, candy palette on a cream canvas.
+   Three faces: Bodoni for display, Space Grotesk for body,
+   Archivo Expanded for every numeral (didone figures are unreadable at size).
+   =========================================================================== */
+:root{
+  --cream:#F5F5F0; --ink:#1A1A1A; --outline:#1E1E1E; --white:#FFFFFF;
+  --coral:#E85D4E; --lime:#C4D94E; --lavender:#C5B5E0; --sky:#8BB4F7;
+  --violet:#A06CE8; --yellow:#F2D160; --peach:#F5B895; --mint:#A8E6CF;
+  --shadow:rgba(26,26,26,.08);
+
+  --f-display:"Bodoni Moda", serif;
+  --f-body:"Space Grotesk", sans-serif;
+  --f-num:"Archivo", sans-serif;
+
+  --t-hero:clamp(44px, 7.6vw, 116px);
+  --t-h1:clamp(38px, 5.2vw, 82px);
+  --t-h2:clamp(30px, 3.4vw, 52px);
+  --t-h3:clamp(21px, 1.7vw, 28px);
+  --t-body:clamp(17px, 1.25vw, 21px);
+  --t-sm:clamp(15px, 1vw, 17px);
+  --t-num-xl:clamp(52px, 7.5vw, 112px);
+  --t-num:clamp(38px, 4.4vw, 68px);
+
+  --gut:clamp(22px, 5vw, 80px);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --maxw:1280px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:var(--f-body);overflow-x:hidden;}
+
+/* ===========================================================================
+   NUMERALS: Archivo, expanded + tabular. The one deviation from Capsule's
+   two-face rule, made deliberately: every figure on the page uses this.
+   =========================================================================== */
+.num{font-family:var(--f-num);font-variation-settings:"wdth" 112;font-weight:800;
+  font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.025em;line-height:.9;font-style:normal;}
+.num-xl{font-size:var(--t-num-xl);}
+.num-md{font-size:var(--t-num);}
+
+/* ===========================================================================
+   TYPE
+   =========================================================================== */
+.display{font-family:var(--f-num);font-variation-settings:"wdth" 125;font-size:var(--t-hero);
+  font-weight:800;line-height:.86;letter-spacing:-.035em;}
+h1,.h1,h2,.h2,h3,.h3{font-optical-sizing:none;}   /* keep the sturdy text cut, not the 96pt hairline */
+h1,.h1{font-family:var(--f-display);font-size:var(--t-h1);font-weight:700;line-height:1.02;letter-spacing:-.02em;}
+h2,.h2{font-family:var(--f-display);font-size:var(--t-h2);font-weight:700;line-height:1.06;letter-spacing:-.015em;}
+h3,.h3{font-family:var(--f-display);font-size:var(--t-h3);font-weight:700;line-height:1.15;}
+p{font-size:var(--t-body);line-height:1.62;opacity:.72;}
+p.sm{font-size:var(--t-sm);line-height:1.6;}
+.lede{font-size:clamp(19px,1.5vw,25px);line-height:1.55;opacity:.78;}
+em{font-style:italic;}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;opacity:.55;}
+.label{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.6;}
+
+/* ===========================================================================
+   PILLS
+   =========================================================================== */
+.pill{display:inline-flex;align-items:center;gap:9px;border:2px solid var(--outline);border-radius:9999px;
+  font-family:var(--f-body);font-weight:600;letter-spacing:.11em;text-transform:uppercase;white-space:nowrap;
+  padding:11px 26px;font-size:13px;background:var(--white);}
+.pill.lg{padding:17px 44px;font-size:15px;}
+.pill.xs{padding:7px 16px;font-size:11px;letter-spacing:.09em;}
+.f-yellow{background:var(--yellow);}.f-coral{background:var(--coral);}.f-lime{background:var(--lime);}
+.f-sky{background:var(--sky);}.f-lav{background:var(--lavender);}.f-violet{background:var(--violet);}
+.f-peach{background:var(--peach);}.f-mint{background:var(--mint);}.f-white{background:var(--white);}
+.aline{width:64px;height:4px;background:var(--coral);border-radius:9999px;}
+
+/* ===========================================================================
+   LAYOUT
+   =========================================================================== */
+section{position:relative;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gut);}
+.chapter{padding:clamp(56px,7vh,92px) 0;}
+.stack>*+*{margin-top:26px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,44px);}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.2vw,32px);}
+@media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+.card{background:var(--white);border:2px solid var(--outline);border-radius:30px;
+  padding:clamp(26px,2.6vw,40px);box-shadow:8px 8px 0 var(--shadow);}
+.card-icon{width:58px;height:58px;border-radius:50%;border:2px solid var(--outline);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.card-icon svg{width:26px;height:26px;}
+
+/* ===========================================================================
+   ATMOSPHERE: grain + drifting decorative pills
+   =========================================================================== */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.045;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.glow{position:absolute;inset:0;pointer-events:none;z-index:0;}
+.glow.a{background:radial-gradient(ellipse at 85% 12%,rgba(232,93,78,.13),transparent 58%),
+                   radial-gradient(ellipse at 8% 88%,rgba(139,180,247,.15),transparent 58%);}
+.glow.b{background:radial-gradient(ellipse at 15% 20%,rgba(196,217,78,.14),transparent 60%),
+                   radial-gradient(ellipse at 90% 80%,rgba(160,108,232,.10),transparent 58%);}
+.deco{position:absolute;z-index:1;border:2px solid var(--outline);border-radius:9999px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;pointer-events:none;
+  animation:drift 9s ease-in-out infinite;}
+.deco.circle{border-radius:50%;}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(var(--r,0deg));}50%{transform:translateY(-16px) rotate(var(--r,0deg));}}
+@media(max-width:860px){.deco{display:none;}}
+
+/* ===========================================================================
+   BACKGROUND ATMOSPHERE
+   Faint trend curves and a masked dot grid, in place of the floating pills.
+   Both are decorative and sit under everything at z-index 0.
+   =========================================================================== */
+.herobg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+.herobg path{fill:none;stroke-linecap:round;}
+.dotgrid{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(26,26,26,.20) 1.3px,transparent 1.3px);
+  background-size:32px 32px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000 10%,transparent 70%);
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000 10%,transparent 70%);}
+
+/* ===========================================================================
+   SCROLL REVEALS: IntersectionObserver adds .in
+   =========================================================================== */
+[data-rv]{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+[data-rv].in{opacity:1;transform:none;}
+[data-rv][data-d="1"]{transition-delay:.09s}[data-rv][data-d="2"]{transition-delay:.18s}
+[data-rv][data-d="3"]{transition-delay:.27s}[data-rv][data-d="4"]{transition-delay:.36s}
+[data-rv][data-d="5"]{transition-delay:.45s}
+
+/* ===========================================================================
+   HERO
+   =========================================================================== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+.hero .inner{position:relative;z-index:3;}
+.scrollcue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:4;
+  display:flex;flex-direction:column;align-items:center;gap:10px;opacity:.5;}
+.scrollcue .bar{width:2px;height:44px;background:var(--ink);border-radius:2px;transform-origin:top;
+  animation:cue 1.9s var(--ease) infinite;}
+@keyframes cue{0%{transform:scaleY(0);opacity:0}40%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1) translateY(44px);opacity:0}}
+
+/* ===========================================================================
+   PROGRESS RAIL
+   =========================================================================== */
+.rail-nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:900;
+  display:flex;flex-direction:column;gap:13px;}
+.rail-nav a{width:9px;height:9px;border-radius:50%;border:2px solid rgba(26,26,26,.28);
+  transition:all .3s var(--ease);position:relative;}
+.rail-nav a.on{background:var(--coral);border-color:var(--coral);transform:scale(1.35);}
+.rail-nav a span{position:absolute;right:20px;top:50%;transform:translateY(-50%);white-space:nowrap;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:0;transition:opacity .25s;}
+.rail-nav a:hover span{opacity:.75;}
+@media(max-width:860px){.rail-nav{display:none;}}
+.topbar{position:fixed;top:0;left:0;height:3px;background:var(--coral);z-index:950;width:0;}
+
+/* ===========================================================================
+   CONNECTOR: dashed path with a travelling packet
+   =========================================================================== */
+.flow-mini{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+.node{background:var(--white);border:2px solid var(--outline);border-radius:9999px;
+  padding:15px 26px;box-shadow:6px 6px 0 var(--shadow);font-size:13px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;}
+.link{position:relative;width:clamp(40px,5vw,78px);height:4px;flex:none;}
+.link::before{content:"";position:absolute;inset:0;border-top:4px dashed var(--outline);opacity:.45;}
+.link::after{content:"";position:absolute;right:-1px;top:-7px;border-left:11px solid var(--outline);
+  border-top:8px solid transparent;border-bottom:8px solid transparent;}
+.link .packet{position:absolute;top:-6px;left:0;width:14px;height:14px;border-radius:50%;
+  background:var(--coral);border:2px solid var(--outline);opacity:0;}
+.in .link .packet{animation:packet 2.4s var(--ease) infinite;}
+@keyframes packet{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:100%;opacity:0}}
+
+/* ===========================================================================
+   INVENTORY DOT FIELD: 11M names, mostly dormant
+   =========================================================================== */
+.dotfield{display:grid;grid-template-columns:repeat(34,1fr);gap:6px;}
+.dotfield i{aspect-ratio:1;border-radius:50%;background:rgba(26,26,26,.13);
+  transform:scale(.4);opacity:0;transition:transform .5s var(--ease),opacity .5s var(--ease);}
+.dotfield.in i{transform:scale(1);opacity:1;}
+.dotfield i.hot{background:var(--coral);}
+@media(max-width:860px){.dotfield{grid-template-columns:repeat(20,1fr);}}
+
+/* ===========================================================================
+   PIPELINE: sticky stage, scroll drives a horizontal rail
+   =========================================================================== */
+.pipeline{position:relative;}
+.pipe-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;
+  justify-content:center;}
+.pipe-head{text-align:center;padding:0 var(--gut);margin-bottom:clamp(20px,3vh,40px);position:relative;z-index:4;}
+.pipe-rail{display:flex;align-items:stretch;gap:clamp(30px,4vw,64px);will-change:transform;position:relative;z-index:3;}
+.stage{width:clamp(280px,32vw,430px);flex:none;background:var(--white);border:2px solid var(--outline);
+  border-radius:34px;padding:clamp(22px,2.2vw,34px);box-shadow:10px 10px 0 var(--shadow);
+  opacity:.34;transform:scale(.93);transition:opacity .45s var(--ease),transform .45s var(--ease);
+  display:flex;flex-direction:column;}
+.stage.on{opacity:1;transform:scale(1);}
+.stage-ico{width:54px;height:54px;border-radius:50%;border:2px solid var(--outline);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.stage-ico svg{width:25px;height:25px;}
+.stage h3{margin-bottom:10px;}
+.stage p{font-size:15px;line-height:1.55;}
+.stage-foot{margin-top:auto;padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.stage-out{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.6;}
+.stage-drop{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px;min-height:26px;}
+.stage-drop b{font-family:var(--f-body);font-size:10px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;border:2px solid var(--outline);border-radius:9999px;padding:4px 10px;
+  background:var(--cream);opacity:0;transform:translateY(-10px);}
+.stage.on .stage-drop b{animation:dropout .9s var(--ease) forwards;}
+.stage.on .stage-drop b:nth-child(2){animation-delay:.12s}
+.stage.on .stage-drop b:nth-child(3){animation-delay:.24s}
+@keyframes dropout{0%{opacity:0;transform:translateY(-10px) rotate(0)}
+  35%{opacity:1;transform:translateY(0) rotate(-3deg)}
+  100%{opacity:.35;transform:translateY(16px) rotate(-8deg)}}
+
+/* the survivor counter that falls as you scroll the pipeline */
+.pipe-meter{position:relative;z-index:4;text-align:center;margin-top:clamp(20px,3.5vh,44px);padding:0 var(--gut);}
+.pipe-meter .big{color:var(--coral);}
+.pipe-track{max-width:560px;margin:16px auto 0;height:12px;border:2px solid var(--outline);
+  border-radius:9999px;background:var(--cream);overflow:hidden;}
+.pipe-fill{height:100%;background:var(--coral);border-right:2px solid var(--outline);border-radius:9999px;width:100%;}
+.pipe-steps{display:flex;justify-content:center;gap:8px;margin-top:16px;}
+.pipe-steps i{width:26px;height:5px;border-radius:9999px;background:rgba(26,26,26,.16);transition:background .3s;}
+.pipe-steps i.on{background:var(--coral);}
+
+/* ===========================================================================
+   SYSTEM ARCHITECTURE DIAGRAM
+   Two zone panels, a hand-off arrow between them, and the two return paths
+   that make the whole thing a loop rather than a pipeline.
+   =========================================================================== */
+.arch{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(14px,2vw,28px);align-items:stretch;}
+.zone{background:var(--white);border:2px solid var(--outline);border-radius:30px;
+  padding:clamp(20px,2.2vw,32px);box-shadow:8px 8px 0 var(--shadow);display:flex;flex-direction:column;}
+.zone-head{padding-bottom:18px;margin-bottom:20px;border-bottom:2px dashed rgba(26,26,26,.18);}
+.fnode{border:2px solid var(--outline);border-radius:9999px;background:var(--white);
+  padding:11px 16px;text-align:center;font-size:13px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;line-height:1.25;}
+.fdown{width:2px;height:20px;background:var(--outline);margin:7px auto;position:relative;opacity:.75;}
+.fdown::after{content:"";position:absolute;bottom:-1px;left:-7px;
+  border-top:10px solid var(--outline);border-left:8px solid transparent;border-right:8px solid transparent;}
+.arch-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;}
+.arch-link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;}
+.arch-arrow{width:46px;height:4px;background:var(--outline);position:relative;}
+.arch-arrow::after{content:"";position:absolute;right:-2px;top:-7px;
+  border-left:12px solid var(--outline);border-top:9px solid transparent;border-bottom:9px solid transparent;}
+.arch-link .mini{opacity:.6;line-height:1.5;}
+.loopback{margin-top:26px;border:2px dashed var(--outline);border-radius:26px;
+  padding:22px clamp(18px,2vw,30px);display:flex;flex-direction:column;gap:14px;}
+.loop-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.loop-line{flex:none;width:44px;height:2px;background:var(--outline);opacity:.5;position:relative;}
+.loop-line::after{content:"";position:absolute;right:-1px;top:-5px;
+  border-left:9px solid var(--outline);border-top:6px solid transparent;border-bottom:6px solid transparent;opacity:.6;}
+@media(max-width:1000px){
+  .arch{grid-template-columns:1fr;}
+  .arch-link{flex-direction:row;padding:6px 0;}
+  .arch-arrow{transform:rotate(90deg);}
+}
+
+/* ===========================================================================
+   VALUE OUTSIDE THE BAR
+   A 5%-wide fill cannot hold its own label, so narrow charts print the value
+   in a fixed column after the track instead of inside the fill.
+   =========================================================================== */
+.barval{flex:none;min-width:clamp(86px,9vw,124px);text-align:right;
+  font-family:var(--f-num);font-variation-settings:"wdth" 110;font-weight:800;
+  font-size:clamp(17px,1.6vw,24px);font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+
+/* ===========================================================================
+   BIG THREE: the outcome hook
+   =========================================================================== */
+.bigthree{display:flex;align-items:stretch;gap:clamp(10px,1.6vw,22px);flex-wrap:wrap;}
+.bigthree .step{flex:1;min-width:210px;background:var(--white);border:2px solid var(--outline);
+  border-radius:30px;padding:clamp(22px,2.4vw,34px);box-shadow:8px 8px 0 var(--shadow);}
+.bigthree .arrowcol{display:flex;align-items:center;flex:none;}
+.bigthree .arrowcol div{width:38px;height:4px;background:var(--outline);position:relative;}
+.bigthree .arrowcol div::after{content:"";position:absolute;right:-2px;top:-7px;
+  border-left:12px solid var(--outline);border-top:9px solid transparent;border-bottom:9px solid transparent;}
+@media(max-width:860px){.bigthree .arrowcol{display:none;}}
+
+.dense .card,.dense .step{padding:clamp(18px,1.8vw,26px);}
+.dense .card p.sm,.dense .step p.sm{font-size:14px;line-height:1.5;}
+.dense .card-icon{width:46px;height:46px;margin-bottom:13px;}
+.dense .card-icon svg{width:21px;height:21px;}
+.dense h3{font-size:clamp(18px,1.4vw,22px);}
+.dense .grid2,.dense .grid3{gap:clamp(14px,1.6vw,22px);}
+.dense .track{height:36px;}
+.dense .src{margin-top:6px;}
+.dense h1{max-width:24ch;}
+.dense .barrow{margin-bottom:11px;}
+
+/* source attribution under a stat */
+.src{font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.42;margin-top:10px;line-height:1.5;}
+
+/* ===========================================================================
+   COMPACT SECTIONS: fit one viewport
+   =========================================================================== */
+.fitpage{min-height:100vh;display:flex;align-items:center;padding:clamp(34px,4vh,58px) 0;}
+.fitpage .wrap{width:100%;}
+.arch.compact .fnode{padding:6px 11px;font-size:11px;letter-spacing:.03em;line-height:1.2;}
+.arch.compact .fdown{height:10px;margin:3px auto;}
+.arch.compact .fdown::after{border-top-width:8px;border-left-width:6px;border-right-width:6px;left:-5px;}
+.arch.compact .zone{padding:clamp(14px,1.3vw,19px);border-radius:24px;}
+.arch.compact .zone-head{padding-bottom:10px;margin-bottom:11px;}
+.arch.compact .zone-head h3{font-size:clamp(18px,1.5vw,23px);}
+
+/* ===========================================================================
+   BARS
+   =========================================================================== */
+.barrow{display:flex;align-items:center;gap:clamp(12px,1.6vw,24px);margin-bottom:13px;}
+.barrow .bl{width:clamp(120px,15vw,215px);flex:none;font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;opacity:.62;}
+.track{flex:1;height:42px;border:2px solid var(--outline);border-radius:9999px;background:var(--cream);overflow:hidden;}
+.fill{height:100%;border-radius:9999px;border-right:2px solid var(--outline);width:0;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:15px;
+  transition:width 1.3s var(--ease);}
+.fill span{font-family:var(--f-num);font-variation-settings:"wdth" 110;font-weight:700;font-size:14px;
+  font-variant-numeric:tabular-nums;}
+
+/* ===========================================================================
+   PHOTO PAIR: the trend itself, shown rather than described
+   =========================================================================== */
+.photopair{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2vw,30px);}
+.photo{width:clamp(118px,11vw,158px);border:2px solid var(--outline);border-radius:18px;
+  overflow:hidden;box-shadow:6px 6px 0 var(--shadow);background:var(--white);}
+.photo svg,.photo img{display:block;width:100%;height:auto;aspect-ratio:17/19;object-fit:cover;}
+.photo figcaption{border-top:2px solid var(--outline);padding:7px 6px;text-align:center;
+  font-size:9.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.6;}
+.photoarrow{width:40px;height:4px;background:var(--outline);position:relative;flex:none;}
+.photoarrow::after{content:"";position:absolute;right:-2px;top:-7px;
+  border-left:12px solid var(--outline);border-top:9px solid transparent;border-bottom:9px solid transparent;}
+
+/* ===========================================================================
+   TEAM
+   =========================================================================== */
+.teamgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.2vw,18px);}
+@media(max-width:980px){.teamgrid{grid-template-columns:repeat(2,1fr);}}
+.member{background:var(--white);border:2px solid var(--outline);border-radius:26px;
+  padding:clamp(16px,1.6vw,22px);box-shadow:7px 7px 0 var(--shadow);text-align:left;}
+.member .initial{width:46px;height:46px;font-size:20px;border-radius:50%;border:2px solid var(--outline);
+  display:flex;align-items:center;justify-content:center;font-family:var(--f-display);
+  font-size:23px;font-weight:700;margin-bottom:16px;}
+
+/* ===========================================================================
+   BROWSER CHROME: makes the board read as a product shot, not a slot
+   =========================================================================== */
+.browser{border:2px solid var(--outline);border-radius:26px;overflow:hidden;
+  box-shadow:14px 14px 0 var(--shadow);background:var(--white);}
+.browser-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;
+  border-bottom:2px solid var(--outline);background:var(--cream);}
+.browser-bar i{width:11px;height:11px;border-radius:50%;border:2px solid var(--outline);flex:none;}
+.browser-bar i:nth-child(1){background:var(--coral);}
+.browser-bar i:nth-child(2){background:var(--yellow);}
+.browser-bar i:nth-child(3){background:var(--lime);}
+.browser-bar .url{flex:1;margin-left:10px;border:2px solid var(--outline);border-radius:9999px;
+  background:var(--white);padding:5px 16px;font-size:11px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;opacity:.65;text-align:center;}
+.browser .frame{border:0;border-radius:0;box-shadow:none;}
+
+/* zone headers tinted so supply and demand read apart at a glance */
+.zone.supply .zone-head{background:linear-gradient(180deg,rgba(139,180,247,.22),transparent);
+  margin:calc(-1 * clamp(14px,1.3vw,19px)) calc(-1 * clamp(14px,1.3vw,19px)) 11px;
+  padding:clamp(14px,1.3vw,19px);border-radius:22px 22px 0 0;border-bottom:2px solid var(--outline);}
+.zone.demand .zone-head{background:linear-gradient(180deg,rgba(245,184,149,.28),transparent);
+  margin:calc(-1 * clamp(14px,1.3vw,19px)) calc(-1 * clamp(14px,1.3vw,19px)) 11px;
+  padding:clamp(14px,1.3vw,19px);border-radius:22px 22px 0 0;border-bottom:2px solid var(--outline);}
+
+/* centred flow */
+.flow-mini.center{justify-content:center;}
+
+/* ===========================================================================
+   BLOCKED LIST: one row per name, reason beside it
+   =========================================================================== */
+.blocklist{display:flex;flex-direction:column;gap:9px;margin-top:18px;}
+.blockrow{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  border:2px solid var(--outline);border-radius:9999px;background:var(--cream);padding:9px 18px;}
+.blockrow code{font-family:var(--f-body);font-size:12.5px;font-weight:600;letter-spacing:.01em;
+  text-decoration:line-through;text-decoration-color:var(--coral);text-decoration-thickness:2px;}
+.blockrow em{font-style:normal;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;opacity:.55;white-space:nowrap;}
+
+/* ===========================================================================
+   SOLD GRID: the closing visual: real names, real prices
+   =========================================================================== */
+.soldgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:12px;}
+.sold{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  background:var(--white);border:2px solid var(--outline);border-radius:9999px;
+  padding:13px 22px;box-shadow:5px 5px 0 var(--shadow);}
+.sold span{font-family:var(--f-body);font-size:12.5px;font-weight:600;letter-spacing:.02em;}
+.sold b{font-family:var(--f-num);font-variation-settings:"wdth" 110;font-weight:800;font-size:16px;
+  font-variant-numeric:tabular-nums;color:var(--coral);}
+
+/* ===========================================================================
+   SCREENSHOT FRAME
+   =========================================================================== */
+.frame{position:relative;border:2px solid var(--outline);border-radius:30px;overflow:hidden;
+  box-shadow:14px 14px 0 var(--shadow);aspect-ratio:16/10;
+  background:linear-gradient(135deg,var(--lavender) 0%,var(--sky) 52%,var(--mint) 100%);}
+.frame::after{content:"";position:absolute;inset:0;opacity:.16;
+  background-image:radial-gradient(circle,var(--ink) 1.4px,transparent 1.4px);background-size:20px 20px;}
+.frame .inner{position:absolute;inset:20px;border:2px dashed var(--outline);border-radius:22px;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;z-index:3;}
+
+/* ===========================================================================
+   STATEMENT + CLOSING
+   =========================================================================== */
+.statement{min-height:88vh;display:flex;align-items:center;text-align:center;overflow:hidden;}
+.hl{display:inline-block;background:var(--lime);border:2px solid var(--outline);border-radius:9999px;
+  padding:.1em .5em;font-family:var(--f-body);font-weight:500;font-size:.62em;letter-spacing:-.005em;}
+.closing{min-height:94vh;display:flex;align-items:center;text-align:center;overflow:hidden;}
+
+/* ===========================================================================
+   PLACEHOLDER MARKER: delete the class once a number is verified
+   =========================================================================== */
+.ph{color:var(--coral);border-bottom:3px dotted var(--coral);font-style:normal;}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.2s!important;}
+  html{scroll-behavior:auto;}
+  [data-rv]{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="topbar" id="topbar"></div>
+
+<nav class="rail-nav" id="railNav">
+  <a href="#top"      data-t="Top"></a>
+  <a href="#hook"     data-t="What we did"></a>
+  <a href="#example"  data-t="One of them"></a>
+  <a href="#problem"  data-t="The problem"></a>
+  <a href="#proof"    data-t="The proof"></a>
+  <a href="#insight"  data-t="The insight"></a>
+  <a href="#board"    data-t="The board"></a>
+  <a href="#architecture" data-t="Architecture"></a>
+  <a href="#engine"   data-t="The engine"></a>
+  <a href="#gate"     data-t="The gate"></a>
+  <a href="#bidding"  data-t="Bidding system"></a>
+  <a href="#business" data-t="Why it matters"></a>
+  <a href="#honest"   data-t="What's unproven"></a>
+  <a href="#next"     data-t="What's next"></a>
+  <a href="#team"     data-t="The team"></a>
+  <a href="#end"      data-t="End"></a>
+</nav>
+
+<!-- =====================================================================
+     HERO
+     ===================================================================== -->
+<section class="hero" id="top">
+  <div class="glow a"></div>
+  <div class="dotgrid"></div>
+  <!-- decorative: stylised attention curves, the shape the whole product trades on -->
+  <svg class="herobg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-40,690 C180,690 250,300 430,286 C610,272 700,520 900,596 C1080,664 1290,684 1480,690"
+          stroke="#E85D4E" stroke-width="3" opacity=".18"/>
+    <path d="M-40,742 C220,742 300,436 500,420 C700,404 790,600 980,660 C1140,710 1320,734 1480,740"
+          stroke="#8BB4F7" stroke-width="3" opacity=".20"/>
+    <path d="M-40,790 C260,790 360,556 570,540 C780,524 880,676 1060,724 C1200,760 1350,782 1480,788"
+          stroke="#C4D94E" stroke-width="3" opacity=".22"/>
+    <path d="M-40,832 C300,832 420,660 640,648 C860,636 960,744 1140,778 C1260,800 1380,824 1480,830"
+          stroke="#A06CE8" stroke-width="3" opacity=".14"/>
+  </svg>
+  <div class="inner wrap">
+    <h1 class="display" data-rv>Trendy Domains</h1>
+    <div data-rv data-d="1" style="margin:24px auto;"><div class="aline" style="margin:0 auto;"></div></div>
+    <p class="lede" data-rv data-d="2" style="max-width:860px;margin:0 auto;font-size:clamp(22px,2.1vw,36px);line-height:1.32;opacity:.82;">
+      Trends expire. Domains don&rsquo;t.<br>We auction the overlap.
+    </p>
+    <div data-rv data-d="3" style="margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <span class="pill"><span style="opacity:.45;">Team:</span>&nbsp;Last Level Maniacs</span>
+    </div>
+  </div>
+  <div class="scrollcue"><span class="label">Scroll</span><div class="bar"></div></div>
+</section>
+
+<!-- =====================================================================
+     WHAT WE DID: the outcome, before any explanation
+     SAY: three numbers, left to right. Then stop.
+     ===================================================================== -->
+<section class="chapter fitpage" id="hook">
+  <div class="glow b"></div>
+  <div class="dotgrid"></div>
+  <div class="wrap" style="position:relative;z-index:2;text-align:center;">
+    <h1 data-rv style="max-width:19ch;margin:0 auto;">We turned a week of trending searches into a live auction board.</h1>
+    <p class="lede" data-rv data-d="1" style="margin:20px auto 0;max-width:46ch;">No human picked any of it: not the keywords, the names, the extensions or the prices.</p>
+
+    <div class="bigthree" data-rv data-d="2" style="margin-top:46px;">
+      <div class="step">
+        <div class="num num-md" style="color:var(--sky);">17,726</div>
+        <div class="label" style="margin-top:14px;">Trending keywords read</div>
+        <p class="sm" style="margin-top:10px;">Seven days of Google Trends and X, four regions.</p>
+      </div>
+      <div class="arrowcol"><div></div></div>
+      <div class="step">
+        <div class="num num-md" style="color:var(--violet);">172</div>
+        <div class="label" style="margin-top:14px;">Names cleared for sale</div>
+        <p class="sm" style="margin-top:10px;">Available, on-brand, and past a four-layer trademark gate.</p>
+      </div>
+      <div class="arrowcol"><div></div></div>
+      <div class="step">
+        <div class="num num-md" style="color:var(--coral);">28</div>
+        <div class="label" style="margin-top:14px;">Live auctions right now</div>
+        <p class="sm" style="margin-top:10px;">Four regional boards, refilling themselves as lots close.</p>
+      </div>
+    </div>
+
+    <p data-rv data-d="3" style="margin:34px auto 0;">End to end, that run took <strong>three minutes</strong>.</p>
+  </div>
+</section>
+
+<!-- =====================================================================
+     ONE OF THEM: the worked example, now that the audience knows what
+     they are looking at. SAY the keyword out loud, then the domain.
+     ===================================================================== -->
+<section class="chapter fitpage" id="example" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+  <div class="wrap" style="text-align:center;">
+    <h1 data-rv style="max-width:22ch;margin:0 auto;">Here is one of the hundred and seventy-two.</h1>
+    <p class="lede" data-rv data-d="1" style="margin:18px auto 0;max-width:48ch;">A viral AI image prompt was trending in India. This is the keyword it arrived as:</p>
+
+    <!-- To use real photographs, replace each <svg> with:
+              <img src="img/before.jpg" alt="An ordinary snapshot">
+              <img src="img/after.jpg"  alt="The same snapshot restyled as a 1980s portrait">
+         Use a photo the team owns. See pitch/README.md. -->
+    <div class="photopair" data-rv data-d="2" style="margin-top:30px;">
+      <figure class="photo">
+        <svg viewBox="0 0 170 190" aria-label="An ordinary snapshot">
+          <rect width="170" height="190" fill="#EDEDE6"/>
+          <rect y="150" width="170" height="40" fill="#E2E2DA"/>
+          <path d="M55,86 C55,60 70,46 85,46 C100,46 115,60 115,86 C115,106 102,118 85,118 C68,118 55,106 55,86 Z" fill="#CFCFC6"/>
+          <path d="M52,84 C50,54 68,38 85,38 C102,38 120,54 118,84 C114,72 104,64 85,64 C66,64 56,72 52,84 Z" fill="#B9B9AF"/>
+          <path d="M18,190 C18,146 46,124 85,124 C124,124 152,146 152,190 Z" fill="#C6C6BC"/>
+        </svg>
+        <figcaption>An ordinary photo</figcaption>
+      </figure>
+      <div class="photoarrow"></div>
+      <figure class="photo">
+        <svg viewBox="0 0 170 190" aria-label="The same snapshot restyled as a 1980s studio portrait">
+          <defs>
+            <linearGradient id="rg" x1="0" y1="0" x2=".9" y2="1">
+              <stop offset="0" stop-color="#F7D97A"/><stop offset=".45" stop-color="#F0996F"/>
+              <stop offset="1" stop-color="#7E4FC4"/>
+            </linearGradient>
+            <radialGradient id="vig" cx=".5" cy=".45" r=".78">
+              <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+              <stop offset="1" stop-color="#2A1140" stop-opacity=".55"/>
+            </radialGradient>
+            <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5E2C78"/><stop offset="1" stop-color="#3A1A52"/>
+            </linearGradient>
+            <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r=".5" fill="#fff" opacity=".22"/>
+              <circle cx="3" cy="3" r=".4" fill="#000" opacity=".14"/>
+            </pattern>
+          </defs>
+          <rect width="170" height="190" fill="url(#rg)"/>
+          <!-- the laser grid every mall studio owned -->
+          <g stroke="#FFF" stroke-opacity=".30" stroke-width="1.4">
+            <path d="M0,132 H170"/><path d="M0,150 H170"/><path d="M0,172 H170"/>
+            <path d="M34,190 L64,120"/><path d="M136,190 L106,120"/><path d="M85,190 V120"/>
+          </g>
+          <!-- soft-focus halo, the other studio signature -->
+          <circle cx="85" cy="82" r="62" fill="#FFF" opacity=".16"/>
+          <path d="M16,190 C16,144 46,121 85,121 C124,121 154,144 154,190 Z" fill="#6B3A8C"/>
+          <path d="M55,84 C55,58 70,44 85,44 C100,44 115,58 115,84 C115,104 102,116 85,116 C68,116 55,104 55,84 Z" fill="#C98A9E"/>
+          <path d="M50,82 C46,46 70,32 85,32 C100,32 124,46 120,82 C116,66 106,58 85,58 C64,58 54,66 50,82 Z" fill="url(#hair)"/>
+          <path d="M120,60 C134,64 138,84 130,96 C132,78 128,66 120,60 Z" fill="url(#hair)"/>
+          <rect width="170" height="190" fill="url(#grain)"/>
+          <rect width="170" height="190" fill="url(#vig)"/>
+          <text x="158" y="181" text-anchor="end" font-family="Space Grotesk, sans-serif"
+                font-size="12" font-weight="700" fill="#FFE9A8" opacity=".9">&rsquo;87</text>
+        </svg>
+        <figcaption>What was trending</figcaption>
+      </figure>
+    </div>
+
+    <div class="flow-mini center" data-rv data-d="3" style="margin-top:32px;">
+      <div class="node f-yellow">1980s photo prompt chatgpt</div>
+      <div class="link"><i class="packet"></i></div>
+      <div class="node f-lime">retrophoto.fun</div>
+      <div class="link"><i class="packet"></i></div>
+      <div class="node f-coral">Sold &middot; $24.99</div>
+    </div>
+
+    <div class="grid3" style="margin-top:34px;text-align:left;">
+      <div class="card" data-rv data-d="1">
+        <div class="card-headline h3">Five words became two</div>
+        <p class="sm" style="margin-top:12px;">Shortened on meaning, not by deleting spaces. The alternative was <em>photoediting1980saiphotoprompt</em>: a valid domain, a worthless product.</p>
+      </div>
+      <div class="card" data-rv data-d="2">
+        <div class="card-headline h3">.fun was reasoned, not guessed</div>
+        <p class="sm" style="margin-top:12px;">The keyword read as Entertainment, and the extension was rated against that meaning. Fit scored <span class="num" style="font-size:15px;">75</span>/100.</p>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="card-headline h3">Checked, then cleared</div>
+        <p class="sm" style="margin-top:12px;">Confirmed unregistered against 12.4M rows, then read once more as a finished name. Final score <span class="num" style="font-size:15px;">72.1</span>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     BEAT ONE: THE PROBLEM
+     ===================================================================== -->
+<section class="chapter fitpage dense" id="problem" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+  <div class="wrap">
+    <div data-rv><span class="pill f-lav">the problem</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:19ch;">A registry never runs out of names. It runs out of reasons.</h1>
+
+    <div style="margin-top:46px;" data-rv data-d="2">
+      <div class="dotfield" id="dotfield"></div>
+      <p class="sm" style="margin-top:12px;opacity:.55;">Every dot is a name somebody could register this morning. The coral ones are the only ones anybody is thinking about.</p>
+    </div>
+
+    <div class="grid3" style="margin-top:40px;">
+      <div class="card" data-rv data-d="1">
+        <div class="num num-xl" style="color:var(--coral);" data-count="12.4" data-suffix="M">0</div>
+        <div class="label" style="margin-top:14px;">Names already taken, reserved or premium</div>
+        <p class="sm" style="margin-top:10px;">What is left is effectively unbounded.</p>
+        <div class="src">Radix inventory tables &middot; read 16 Sep 2026</div>
+      </div>
+      <div class="card" data-rv data-d="2">
+        <div class="num num-xl" style="color:var(--sky);">314</div>
+        <div class="label" style="margin-top:14px;">Cheap extensions that renew above their offer price</div>
+        <p class="sm" style="margin-top:10px;">Discount to acquire, recover on renewal. It buys registrations, not attachment.</p>
+        <div class="src">register.domains, 2026</div>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="num num-xl" style="color:var(--violet);">36&times;</div>
+        <div class="label" style="margin-top:14px;">What the same asset fetches once somebody wants it</div>
+        <p class="sm" style="margin-top:10px;">A $549 median resale against a $15 retail registration. The price was never the constraint.</p>
+        <div class="src">NameBio &amp; Sedo, 2024</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================================
+     THE PROOF: trend-driven registration at the second level
+     This is the right layer. The .ai boom proves a TLD can take off;
+     it does not prove a trending keyword sells a specific domain.
+     COVID does, and it does it inside extensions that already existed.
+     ===================================================================== -->
+<section class="chapter fitpage dense" id="proof" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+  <div class="wrap">
+    <div data-rv><span class="pill f-lav">The proof</span></div>
+    <h1 data-rv data-d="1" style="margin-top:20px;max-width:20ch;">This already happens. Nobody is serving it.</h1>
+    <p class="lede" data-rv data-d="2" style="margin-top:14px;max-width:50ch;">One keyword, one month, in 2020.</p>
+
+    <div data-rv data-d="3" style="margin-top:34px;max-width:920px;">
+      <div class="barrow"><div class="bl">December 2019</div><div class="track"><div class="fill" data-w="1" style="background:var(--lavender);"></div></div><div class="barval">&lt;10 / day</div></div>
+      <div class="barrow"><div class="bl">Early March 2020</div><div class="track"><div class="fill" data-w="9" style="background:var(--sky);"></div></div><div class="barval">~400 / day</div></div>
+      <div class="barrow" style="margin-bottom:0;"><div class="bl">After 11 March</div><div class="track"><div class="fill" data-w="100" style="background:var(--coral);"></div></div><div class="barval">4,000+ / day</div></div>
+    </div>
+
+    <div class="grid2" style="margin-top:34px;">
+      <div class="card" data-rv data-d="1">
+        <div class="num num-md" style="color:var(--coral);">+656%</div>
+        <div class="label" style="margin-top:10px;">Rise in average daily registrations, February to March 2020</div>
+      </div>
+      <div class="card" data-rv data-d="2">
+        <div class="num num-md" style="color:var(--violet);">3,011</div>
+        <div class="label" style="margin-top:10px;">Names containing &ldquo;covid&rdquo; or &ldquo;corona&rdquo; registered on 20 March alone, in the four largest extensions</div>
+      </div>
+    </div>
+
+    <p data-rv data-d="2" style="margin-top:26px;max-width:58ch;">
+      Second-level names, inside extensions that already existed. They went to whoever typed fastest, and a
+      large share turned out to be fraud. <em>We are proposing the same demand, served by the registry, with
+      a trademark gate in front.</em>
+    </p>
+    <div class="src" style="margin-top:14px;">CircleID &middot; Krebs on Security &middot; March 2020</div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     BEAT TWO: THE INSIGHT
+     SAY: slow down. This is what everything rests on.
+     ===================================================================== -->
+<section class="chapter fitpage" id="insight">
+  <div class="glow a"></div>
+  <div class="wrap" style="position:relative;z-index:2;text-align:center;">
+    <h1 data-rv style="margin:0 auto;max-width:20ch;">
+      A domain has no scarcity of its own.<br>
+      <span class="hl" style="margin-top:.35em;">Attention is the thing that runs out.</span>
+    </h1>
+
+    <div data-rv data-d="2" style="margin:44px auto 0;max-width:880px;">
+      <svg viewBox="0 0 800 270" style="width:100%;height:auto;overflow:visible;" role="img"
+           aria-label="A trend spikes then decays; the auction window sits inside the spike.">
+        <!-- the window in which anybody cares -->
+        <rect x="150" y="18" width="190" height="200" rx="14" fill="#E85D4E" opacity=".10"/>
+        <rect x="150" y="18" width="190" height="200" rx="14" fill="none"
+              stroke="#1E1E1E" stroke-width="2" stroke-dasharray="7 6" opacity=".55"/>
+        <!-- area under the attention curve -->
+        <path d="M40,218 C92,218 132,58 182,50 C242,42 302,120 382,162 C472,204 604,214 760,218 L760,218 L40,218 Z"
+              fill="#F2D160" opacity=".45"/>
+        <!-- the curve itself -->
+        <path d="M40,218 C92,218 132,58 182,50 C242,42 302,120 382,162 C472,204 604,214 760,218"
+              fill="none" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round"/>
+        <!-- baseline -->
+        <line x1="40" y1="218" x2="760" y2="218" stroke="#1E1E1E" stroke-width="2" opacity=".45"/>
+        <!-- peak marker -->
+        <circle cx="182" cy="50" r="8" fill="#E85D4E" stroke="#1E1E1E" stroke-width="2.5"/>
+        <text x="245" y="248" text-anchor="middle" font-family="Space Grotesk, sans-serif"
+              font-size="14" font-weight="600" letter-spacing="1.6" fill="#1A1A1A" opacity=".75">WE SELL HERE</text>
+        <text x="40" y="248" font-family="Space Grotesk, sans-serif" font-size="13"
+              font-weight="500" letter-spacing="1.2" fill="#1A1A1A" opacity=".45">TREND STARTS</text>
+        <text x="760" y="248" text-anchor="end" font-family="Space Grotesk, sans-serif" font-size="13"
+              font-weight="500" letter-spacing="1.2" fill="#1A1A1A" opacity=".45">NOBODY CARES</text>
+      </svg>
+    </div>
+
+    <p class="lede" data-rv data-d="3" style="margin:34px auto 0;max-width:56ch;">
+      There is always another name. What expires is the reason anyone wanted <em>this</em> one.
+      That isn't a flaw in the input, it's the entire product.
+    </p>
+  </div>
+</section>
+
+<!-- =====================================================================
+     THE BOARD: screenshot + live demo handoff
+     ===================================================================== -->
+<section class="chapter fitpage" id="board">
+  <div class="wrap">
+    <div class="grid2" style="align-items:center;">
+      <div>
+        <div data-rv><span class="pill f-lav">what we built</span></div>
+        <h1 data-rv data-d="1" style="margin-top:22px;">The board.</h1>
+        <div data-rv data-d="2" style="margin:24px 0;"><div class="aline"></div></div>
+        <p data-rv data-d="3" style="max-width:44ch;">
+          Four regions, each with its own pool and its own screen. Ten Radix TLDs in play.
+          Every name verified against live inventory at the moment it was listed.
+        </p>
+        <div data-rv data-d="4" style="margin-top:26px;display:flex;gap:9px;flex-wrap:wrap;">
+          <span class="pill xs">IN &middot; 58</span><span class="pill xs">US &middot; 45</span>
+          <span class="pill xs">AE &middot; 41</span><span class="pill xs">WW &middot; 28</span>
+          <span class="pill xs f-yellow"><span class="num" style="font-size:11px;">28</span>&nbsp;live now</span>
+        </div>
+      </div>
+      <div data-rv data-d="2">
+        <!-- Replace the .inner block with: <img src="img/board.png" alt="Live auction board"> -->
+        <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><span class="url">trendydomains.radix.site</span></div>
+        <div class="frame" style="aspect-ratio:16/10;">
+          <div class="inner">
+            <span class="pill xs">Screenshot slot</span>
+            <div class="h3" style="max-width:24ch;">Live auction board: full page, region tabs visible</div>
+            <div class="label">img/board.png</div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SYSTEM ARCHITECTURE: the one-page map
+     SAY: point at the two boxes, then trace the two return arrows.
+     The loop is the thing worth pausing on.
+     ===================================================================== -->
+<section class="chapter fitpage" id="architecture">
+  <div class="glow b"></div>
+  <div class="dotgrid"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div data-rv><span class="pill f-lav">The system</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:20ch;">Two halves, one loop.</h1>
+    <p data-rv data-d="2" style="margin-top:12px;max-width:62ch;">One decides <em>what is worth selling</em>. The other decides <em>how it sells</em>. They share one table, and hand names back to each other.</p>
+
+    <div class="arch compact" data-rv data-d="3" style="margin-top:24px;">
+
+      <div class="zone supply">
+        <div class="zone-head">
+          <span class="pill xs f-sky">Supply</span>
+          <h3 style="margin-top:12px;">Domain quality engine</h3>
+          <p class="sm" style="margin-top:6px;">Batch. Minutes, not milliseconds.</p>
+        </div>
+        <div class="fnode f-yellow">Google Trends &middot; X Trends</div>
+        <div class="fdown"></div>
+        <div class="fnode">Merge &amp; score attention</div>
+        <div class="fdown"></div>
+        <div class="fnode">Model screen: drop 90%</div>
+        <div class="fdown"></div>
+        <div class="fnode">Propose names</div>
+        <div class="fdown"></div>
+        <div class="fnode f-mint">Availability &middot; 12.4M rows</div>
+        <div class="fdown"></div>
+        <div class="fnode f-coral">Trademark &amp; quality gate</div>
+        <div class="fdown"></div>
+        <div class="fnode f-lime">domain_candidates</div>
+      </div>
+
+      <div class="arch-link">
+        <div class="arch-arrow"></div>
+        <span class="mini">Reserves<br>&amp; lists</span>
+      </div>
+
+      <div class="zone demand">
+        <div class="zone-head">
+          <span class="pill xs f-peach">Demand</span>
+          <h3 style="margin-top:12px;">Bidding system</h3>
+          <p class="sm" style="margin-top:6px;">Live. Reads Postgres and nothing else.</p>
+        </div>
+        <div class="fnode f-lime">Board &middot; 4 regions &times; 7 slots</div>
+        <div class="fdown"></div>
+        <div class="fnode">Bid: escrow hold, row locked</div>
+        <div class="fdown"></div>
+        <div class="fnode f-yellow">Clock extends 24h per bid</div>
+        <div class="fdown"></div>
+        <div class="fnode">Scheduler closes what is due</div>
+        <div class="fdown"></div>
+        <div class="arch-split">
+          <div class="fnode f-lime" style="font-size:12px;">Won &rarr; portfolio</div>
+          <div class="fnode f-peach" style="font-size:12px;">Expired &rarr; pool</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="loopback" data-rv data-d="2" style="margin-top:20px;padding:16px 26px;gap:10px;">
+      <div class="loop-row">
+        <span class="pill xs f-lime">Won</span>
+        <span class="loop-line"></span>
+        <span class="sm">written into <span class="num" style="font-size:14px;">dums</span>, so the engine can never propose that name again</span>
+      </div>
+      <div class="loop-row">
+        <span class="pill xs f-peach">Expired</span>
+        <span class="loop-line"></span>
+        <span class="sm">candidate released back to the pool at its score, and unblocked in sibling regions</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     THE ENGINE: sticky pipeline, scroll drives the rail
+     Every number is from production run id 6, 11 Sep 2026, four regions,
+     three minutes wall clock.
+     ===================================================================== -->
+<section class="pipeline" id="engine">
+  <div class="pipe-sticky">
+    <div class="glow b"></div>
+    <div class="pipe-head">
+      <span class="pill f-lav">the engine</span>
+      <h2 style="margin-top:18px;">Trends in. Bidable inventory out.</h2>
+    </div>
+
+    <div style="overflow:hidden;">
+      <div class="pipe-rail" id="pipeRail">
+
+        <article class="stage">
+          <div class="stage-ico f-yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 5-7"/><path d="M14 8h4v4"/></svg>
+          </div>
+          <h3>Sources</h3>
+          <p>Google Trends and X, seven days deep, merged on the normalised keyword. X returns no volume at all: <span class="num" style="font-size:15px;">200</span> rows, every <span class="num" style="font-size:15px;">tweet_volume</span> null. So rank earns its own term and its own quota.</p>
+          <div class="stage-foot"><span class="stage-out">Keywords merged</span><span class="num num-md">17,726</span></div>
+        </article>
+
+        <article class="stage">
+          <div class="stage-ico f-peach">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h5l4 7h7"/><path d="M4 19h5l2-3.5"/><path d="M17 9l3 3-3 3"/></svg>
+          </div>
+          <h3>Score &amp; rank</h3>
+          <p>Volume on a log scale, plus growth, cross-source agreement, X rank, recency and whether the trend is still running. The loudest 510 per region go forward.</p>
+          <div class="stage-drop"><b>15,686 below the cut</b></div>
+          <div class="stage-foot"><span class="stage-out">Sent to screen</span><span class="num num-md">2,040</span></div>
+        </article>
+
+        <article class="stage">
+          <div class="stage-ico f-sky">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg>
+          </div>
+          <h3>Model screen</h3>
+          <p>Sentiment, category, whether it can carry a domain at all, and trademark exposure. Flagged keywords are dropped outright, never demoted. <strong>90.1% rejected here.</strong></p>
+          <div class="stage-drop"><b>Sports fixtures</b><b>Real people</b><b>Brands</b></div>
+          <div class="stage-foot"><span class="stage-out">Survived</span><span class="num num-md">201</span></div>
+        </article>
+
+        <article class="stage">
+          <div class="stage-ico f-violet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"/><path d="M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z"/></svg>
+          </div>
+          <h3>Propose names</h3>
+          <p>Shortened semantically, never concatenated. &ldquo;1980s photo prompt chatgpt&rdquo; becomes <strong>retrophoto.fun</strong>. A label over 18 characters, or scoring under 70 on brandability, is rejected before any API call.</p>
+          <div class="stage-drop"><b>Over 18 chars</b><b>Digits</b><b>Hyphens</b></div>
+          <div class="stage-foot"><span class="stage-out">Domains proposed</span><span class="num num-md">362</span></div>
+        </article>
+
+        <article class="stage">
+          <div class="stage-ico f-mint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+          </div>
+          <h3>Availability</h3>
+          <p>Every name checked against <span class="num" style="font-size:15px;">12,391,754</span> rows of real Radix inventory: registered, premium and reserved. If we can&rsquo;t confirm it&rsquo;s free, it never reaches the board.</p>
+          <div class="stage-drop"><b>Premium &middot; 64</b><b>Registered &middot; 42</b><b>Reserved &middot; 41</b></div>
+          <div class="stage-foot"><span class="stage-out">Confirmed free</span><span class="num num-md">215</span></div>
+        </article>
+
+        <article class="stage">
+          <div class="stage-ico f-coral">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.3 8.3-8 9-4.7-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3>The final gate</h3>
+          <p>The only stage that sees the finished domain, exactly as a bidder would. A malformed verdict defaults to blocked. No model reachable means nothing gets written.</p>
+          <div class="stage-drop"><b>Person &middot; 13</b><b>Sports &middot; 7</b><b>Trademark &middot; 4</b></div>
+          <div class="stage-foot"><span class="stage-out">Cleared</span><span class="num num-md">184</span></div>
+        </article>
+
+        <article class="stage">
+          <div class="stage-ico f-lime">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h10"/><path d="M6 17l6-6"/><path d="M9 5l6 6"/><path d="M13 1l8 8"/><path d="M11 3l8 8"/></svg>
+          </div>
+          <h3>Pool &amp; board</h3>
+          <p>Upserted on region and domain, so a name survives its keyword going quiet. Four regions, ten TLDs, <span class="num" style="font-size:15px;">28</span> live right now. The board only ever reads Postgres.</p>
+          <div class="stage-drop"><b>98 duplicate domains</b></div>
+          <div class="stage-foot"><span class="stage-out">In the pool</span><span class="num num-md">172</span></div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="pipe-meter">
+      <div class="label" id="pipeLabel">Keywords still standing</div>
+      <div class="num num-xl big" id="pipeCount">17,726</div>
+      <div class="pipe-track"><div class="pipe-fill" id="pipeFill"></div></div>
+      <div class="pipe-steps" id="pipeSteps"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     THE REFUSAL: one line, then move on
+     ===================================================================== -->
+<section class="chapter" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+  <div class="wrap" style="text-align:center;">
+    <h1 data-rv style="max-width:24ch;margin:0 auto;">
+      <span class="num" style="font-size:inherit;">17,726</span> in.
+      <span class="num" style="font-size:inherit;color:var(--coral);">172</span> out.
+    </h1>
+    <p class="lede" data-rv data-d="2" style="margin:26px auto 0;max-width:48ch;">
+      Under one percent. Generating names is trivial. The engine's real output is everything it refused to list.
+    </p>
+  </div>
+</section>
+
+<!-- =====================================================================
+     THE GATE: blocked vs listed
+     SAY: tell the story, don't list the layers.
+     ===================================================================== -->
+<section class="chapter fitpage dense" id="gate">
+  <div class="glow a"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div data-rv><span class="pill f-lav">the judgment</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:20ch;">Thirty-one names died at the last gate.</h1>
+    <p class="lede" data-rv data-d="2" style="margin-top:20px;max-width:58ch;">
+      Every one of them had already passed the keyword screen.
+    </p>
+    <div class="grid2" style="margin-top:40px;">
+      <div class="card" data-rv data-d="2">
+        <div class="card-icon f-coral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </div>
+        <h3>Blocked</h3>
+        <div class="blocklist">
+          <div class="blockrow"><code>darnoldseahawks.online</code><em>Real person</em></div>
+          <div class="blockrow"><code>drakemay.press</code><em>Real person</em></div>
+          <div class="blockrow"><code>lockseahawks.online</code><em>Sports team</em></div>
+          <div class="blockrow"><code>iphoneairpromax.store</code><em>Trademark</em></div>
+        </div>
+        <p class="sm" style="margin-top:16px;">
+          13 surnames &middot; 7 teams and event brands &middot; 4 Apple trademarks &middot; 5 protected acronyms &middot; 2 landmarks
+        <p class="sm" style="margin-top:12px;">
+          The screen judges a keyword. The propose step judges a pairing. <em>Neither has ever seen the finished name.</em>
+        </p>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="card-icon f-lime">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>
+        </div>
+        <h3>Listed: labordaysale.store</h3>
+        <div class="label" style="margin-top:8px;">Score <span class="num" style="font-size:15px;">74.67</span> &middot; sold for <span class="num" style="font-size:15px;">$42</span></div>
+        <div style="margin-top:20px;">
+          <div class="barrow"><div class="bl">Trend &middot; 0.35</div><div class="track"><div class="fill" data-w="62" style="background:var(--coral);"><span>61.8</span></div></div></div>
+          <div class="barrow"><div class="bl">TLD fit &middot; 0.20</div><div class="track"><div class="fill" data-w="100" style="background:var(--lime);"><span>100</span></div></div></div>
+          <div class="barrow"><div class="bl">Brandability &middot; 0.20</div><div class="track"><div class="fill" data-w="94" style="background:var(--sky);"><span>94</span></div></div></div>
+          <div class="barrow"><div class="bl">Assessed &middot; 0.15</div><div class="track"><div class="fill" data-w="75" style="background:var(--violet);"><span>75</span></div></div></div>
+          <div class="barrow" style="margin-bottom:0;"><div class="bl">Durability &middot; 0.10</div><div class="track"><div class="fill" data-w="30" style="background:var(--peach);"><span>30</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     THE BIDDING SYSTEM: the demand half, in detail
+     SAY: the engine decides WHAT is for sale. This decides HOW it sells.
+     ===================================================================== -->
+<section class="chapter fitpage dense" id="bidding" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+  <div class="wrap">
+    <div data-rv><span class="pill f-lav">The system &middot; demand side</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:20ch;">The bidding system holds real money against a moving clock.</h1>
+    <p data-rv data-d="2" style="margin-top:14px;max-width:60ch;">
+      <span class="num" style="font-size:19px;">4</span> regions &times;
+      <span class="num" style="font-size:19px;">7</span> slots =
+      <span class="num" style="font-size:19px;">28</span> concurrent lots, refilled the moment one closes.
+    </p>
+
+    <div class="grid3" style="margin-top:26px;gap:14px;">
+      <div class="card" data-rv data-d="1">
+        <div class="card-icon f-coral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="3"/><path d="M3 11h18"/><path d="M7 15h3"/></svg>
+        </div>
+        <h3>Escrow wallet</h3>
+        <p class="sm" style="margin-top:12px;">A bid holds funds, it doesn&rsquo;t spend them. Getting outbid refunds you in the same transaction that seats the new leader. Raising your own bid holds only the difference.</p>
+      </div>
+
+      <div class="card" data-rv data-d="2">
+        <div class="card-icon f-sky">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+        </div>
+        <h3>One bid, one lock</h3>
+        <p class="sm" style="margin-top:12px;">Every bid is a single transaction with the auction row locked for its whole duration, so two people bidding in the same millisecond cannot both win.</p>
+      </div>
+
+      <div class="card" data-rv data-d="3">
+        <div class="card-icon f-yellow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg>
+        </div>
+        <h3>Anti-snipe clock</h3>
+        <p class="sm" style="margin-top:12px;">Every bid pushes the end time to <strong>24 hours from now</strong>. No last-second steal. A <strong>7-day hard cap</strong> stops a contested lot running forever.</p>
+      </div>
+
+      <div class="card" data-rv data-d="1">
+        <div class="card-icon f-violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v8l5 3"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <h3>Death by irrelevance</h3>
+        <p class="sm" style="margin-top:12px;">Zero bids after 24 hours and the trend is re-checked. Trend gone, the lot is pulled. <em>If the check itself fails, the lot survives.</em></p>
+      </div>
+
+      <div class="card" data-rv data-d="2">
+        <div class="card-icon f-lime">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>
+        </div>
+        <h3>The closed loop</h3>
+        <p class="sm" style="margin-top:12px;">Winning writes the name into the registry&rsquo;s own <span class="num" style="font-size:14px;">dums</span> table, so it can never be proposed again. An expired lot returns to the pool.</p>
+      </div>
+
+      <div class="card" data-rv data-d="3">
+        <div class="card-icon f-peach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"/><path d="M6 17l.9 2.1L9 20l-2.1.9L6 23l-.9-2.1L3 20l2.1-.9z"/></svg>
+        </div>
+        <h3>Consolation alternates</h3>
+        <p class="sm" style="margin-top:12px;">Losers get alternate names around the same keyword, at standard price, through the <em>same trademark gate</em> as the board.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     BEAT FOUR: WHY A REGISTRY CARES
+     SAY: this is the section that wins the room.
+     ===================================================================== -->
+<section class="chapter fitpage dense" id="business" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+  <div class="wrap">
+    <div data-rv><span class="pill f-lav">why a registry cares</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:18ch;">There is a market for this. None of it is primary.</h1>
+
+    <div class="grid3" style="margin-top:44px;">
+      <div class="card" data-rv data-d="1">
+        <div class="num num-md" style="color:var(--coral);">$185M</div>
+        <div class="label" style="margin-top:12px;">Domains sold on the aftermarket in 2024</div>
+        <p class="sm" style="margin-top:12px;">Across 144,700 sales. Dollar volume up 32.8% year on year.</p>
+      </div>
+      <div class="card" data-rv data-d="2">
+        <div class="num num-md" style="color:var(--sky);">$549</div>
+        <div class="label" style="margin-top:12px;">Median sale price at Sedo</div>
+        <p class="sm" style="margin-top:12px;">Against $10&ndash;$20 for the same asset at retail. Roughly a 30&times; spread.</p>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="num num-md" style="color:var(--violet);">100%</div>
+        <div class="label" style="margin-top:12px;">Of it is resale</div>
+        <p class="sm" style="margin-top:12px;">Expired names, domainer stock. Nobody auctions a name that was never sold.</p>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:40px;">
+      <div class="card" data-rv data-d="2" style="background:var(--cream);">
+        <div class="card-icon f-peach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l7 7 3-3 6 6"/><path d="M20 17v-5h-5"/></svg>
+        </div>
+        <h3>The markdown playbook</h3>
+        <p class="sm" style="margin-top:14px;">
+          Registries fund first-year promotions below wholesale, then recover on renewal. It buys registrations, not attachment, and tells you nothing about what anyone would have paid.
+        </p>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="card-icon f-lime">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l7-7 3 3 6-6"/><path d="M20 7v5h-5"/></svg>
+        </div>
+        <h3>The primary-market gap</h3>
+        <p class="sm" style="margin-top:14px;">
+          Every dollar of that $185M is resale. We auction names never registered: no previous owner, no acquisition cost, no seller to split with. The clearing price is all registry.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     WHAT WE HAVEN'T PROVEN
+     SAY this one out loud. Volunteering it reads as judgment, and a judge
+     who catches an overclaim discounts everything else you said.
+     ===================================================================== -->
+<section class="chapter fitpage" id="honest">
+  <div class="glow a"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div data-rv><span class="pill f-coral">What we haven't proven</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:20ch;">Nine bids is a demo, not a market.</h1>
+    <p class="lede" data-rv data-d="2" style="margin-top:22px;max-width:56ch;">
+      Seven names sold. Five of them closed at exactly the opening price on a single bid. The two competitive
+      auctions moved <span class="num" style="font-size:inherit;">$1</span> and
+      <span class="num" style="font-size:inherit;">$3</span>.
+    </p>
+    <div class="grid3" style="margin-top:38px;">
+      <div class="card" data-rv data-d="1">
+        <div class="num num-md">9</div><div class="label" style="margin-top:12px;">Bids placed</div>
+      </div>
+      <div class="card" data-rv data-d="2">
+        <div class="num num-md">3</div><div class="label" style="margin-top:12px;">People bidding</div>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="num num-md">7</div><div class="label" style="margin-top:12px;">Names sold</div>
+      </div>
+    </div>
+    <p data-rv data-d="3" style="margin-top:36px;max-width:62ch;">
+      So we have not shown that demand sets the price. What we have built is the thing that makes the experiment
+      possible: a daily supply of legally-clean, on-brand, verified-available names. Week one we would measure
+      bids per auction, and sell-through against the same names at their standard price.
+    </p>
+  </div>
+</section>
+
+<!-- =====================================================================
+     WHAT'S NEXT
+     ===================================================================== -->
+<section class="chapter fitpage" id="next">
+  <div class="glow b"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div data-rv><span class="pill f-lav">What's next</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:22ch;">Built as a one-shot. Architected to run forever.</h1>
+    <div class="grid3" style="margin-top:44px;">
+      <div class="card" data-rv data-d="1">
+        <div class="card-icon f-coral"><span class="h3">I</span></div>
+        <h3>Continuous runs</h3>
+        <p class="sm" style="margin-top:12px;">The pool upserts rather than rebuilds, so a name survives its keyword going quiet. It also switches durability back on: today every candidate sits at <span class="num" style="font-size:15px;">seen_count 1</span>, so a tenth of the score does no work.</p>
+      </div>
+      <div class="card" data-rv data-d="2">
+        <div class="card-icon f-sky"><span class="h3">II</span></div>
+        <h3>More regions</h3>
+        <p class="sm" style="margin-top:12px;">Region is a first-class column end to end. Adding a market is a source feed and a prompt, not a rewrite.</p>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="card-icon f-lime"><span class="h3">III</span></div>
+        <h3>Bids feed pricing</h3>
+        <p class="sm" style="margin-top:12px;">Every closed auction is a willingness-to-pay reading on a name the registry priced flat. That signal outlives the auction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     CLOSING
+     ===================================================================== -->
+<!-- =====================================================================
+     THE TEAM
+     Placed late on purpose: the first 45 seconds belong to the hook.
+     Names are placeholders until the roster is confirmed.
+     ===================================================================== -->
+<section class="chapter fitpage" id="team" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
+  <div class="wrap" style="text-align:center;">
+    <div data-rv><span class="pill f-lav">The team</span></div>
+    <h1 data-rv data-d="1" style="margin:20px auto 0;">Last Level Maniacs</h1>
+    <p class="lede" data-rv data-d="2" style="margin:16px auto 0;max-width:46ch;">Five people, one week.</p>
+    <div class="teamgrid" data-rv data-d="3" style="margin-top:40px;">
+      <div class="member">
+        <div class="initial f-coral">1</div>
+        <h3 class="ph">[Name]</h3>
+        <div class="label" style="margin-top:8px;">Decision engine</div>
+      </div>
+      <div class="member">
+        <div class="initial f-sky">2</div>
+        <h3 class="ph">[Name]</h3>
+        <div class="label" style="margin-top:8px;">Data pipeline</div>
+      </div>
+      <div class="member">
+        <div class="initial f-lime">3</div>
+        <h3 class="ph">[Name]</h3>
+        <div class="label" style="margin-top:8px;">Auctions and wallet</div>
+      </div>
+      <div class="member">
+        <div class="initial f-violet">4</div>
+        <h3 class="ph">[Name]</h3>
+        <div class="label" style="margin-top:8px;">Board and product</div>
+      </div>
+      <div class="member">
+        <div class="initial f-peach">5</div>
+        <h3 class="ph">[Name]</h3>
+        <div class="label" style="margin-top:8px;">Infrastructure and deploy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" id="end">
+  <div class="glow a"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <h1 data-rv style="margin:0 auto;max-width:19ch;">
+      Whatever the internet is talking about tomorrow is already on the board.
+    </h1>
+
+    <div data-rv data-d="2" style="margin:44px auto 0;max-width:900px;">
+      <div class="label" style="margin-bottom:18px;">What has sold so far</div>
+      <div class="soldgrid">
+        <div class="sold"><span>melbournestadium.host</span><b>$92.99</b></div>
+        <div class="sold"><span>ipogmp.press</span><b>$70.99</b></div>
+        <div class="sold"><span>halfmast.press</span><b>$69.99</b></div>
+        <div class="sold"><span>promptedit.tech</span><b>$49.00</b></div>
+        <div class="sold"><span>labordaysale.store</span><b>$42.00</b></div>
+        <div class="sold"><span>laborday.store</span><b>$42.00</b></div>
+        <div class="sold"><span>retrophoto.fun</span><b>$24.99</b></div>
+      </div>
+    </div>
+
+    <div data-rv data-d="3" style="margin:40px auto 0;"><div class="aline" style="margin:0 auto 26px;"></div>
+      <span class="pill lg"><span style="opacity:.45;">Team:</span>&nbsp;Last Level Maniacs</span>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ===========================================================================
+   1. SCROLL REVEALS
+   =========================================================================== */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    if(e.target.dataset.count !== undefined) countUp(e.target);
+    e.target.querySelectorAll?.('.fill[data-w]').forEach(f=>{f.style.width=f.dataset.w+'%';});
+    io.unobserve(e.target);
+  });
+},{threshold:.18, rootMargin:'0px 0px -8% 0px'});
+
+document.querySelectorAll('[data-rv], .dotfield, [data-count]').forEach(el=>io.observe(el));
+
+/* Bars live inside cards that are themselves revealed, so watch them directly too. */
+const ioBar = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.style.width = e.target.dataset.w + '%';
+    ioBar.unobserve(e.target);
+  });
+},{threshold:.4});
+document.querySelectorAll('.fill[data-w]').forEach(el=>ioBar.observe(el));
+
+/* ===========================================================================
+   2. COUNTERS
+   =========================================================================== */
+function countUp(el){
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const dur = 1400, t0 = performance.now();
+  const tick = (t)=>{
+    const p = Math.min((t-t0)/dur, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.round(target*eased) + suffix;
+    if(p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+/* ===========================================================================
+   3. INVENTORY DOT FIELD
+   11M names; a handful are trending. Built in JS so the markup stays clean.
+   =========================================================================== */
+(function buildDots(){
+  const field = document.getElementById('dotfield');
+  if(!field) return;
+  const N = 34*4;
+  const hot = new Set();
+  while(hot.size < 9) hot.add(Math.floor(Math.random()*N));
+  for(let i=0;i<N;i++){
+    const d = document.createElement('i');
+    if(hot.has(i)) d.className = 'hot';
+    d.style.transitionDelay = (i%34)*9 + Math.floor(i/34)*40 + 'ms';
+    field.appendChild(d);
+  }
+})();
+
+/* ===========================================================================
+   4. THE PIPELINE
+   A tall section with a sticky stage. Scroll progress through the section
+   drives the horizontal rail, the active card, and the survivor counter.
+   =========================================================================== */
+(function pipeline(){
+  const section = document.getElementById('engine');
+  const rail    = document.getElementById('pipeRail');
+  const countEl = document.getElementById('pipeCount');
+  const fillEl  = document.getElementById('pipeFill');
+  const stepsEl = document.getElementById('pipeSteps');
+  const labelEl = document.getElementById('pipeLabel');
+  if(!section || !rail) return;
+
+  const stages = [...rail.children];
+  const n = stages.length;
+
+  /* Survivors at the OUTPUT of each stage.
+     `ok:false` means the number is a stand-in: the counter renders it in coral with a
+     dotted underline so an unverified figure can never be read out as if it were real.
+     Replace the value and flip ok to true as each one is measured. */
+  const stageData = [
+    {v:17726, ok:true, label:'Keywords still standing'},
+    {v: 2040, ok:true, label:'Keywords still standing'},
+    {v:  201, ok:true, label:'Keywords still standing'},
+    {v:  362, ok:true, label:'Domains still standing'},
+    {v:  215, ok:true, label:'Domains still standing'},
+    {v:  184, ok:true, label:'Domains still standing'},
+    {v:  172, ok:true, label:'Names in the pool'},
+  ];
+  const survivors = stageData.map(d=>d.v);
+
+  /* One viewport of scroll per stage, plus a little breathing room. */
+  section.style.height = (n * 92 + 40) + 'vh';
+
+  stages.forEach((_,i)=>{
+    const s = document.createElement('i');
+    stepsEl.appendChild(s);
+  });
+  const steps = [...stepsEl.children];
+
+  const fmt = v => Math.round(v).toLocaleString('en-US');
+
+  let ticking = false;
+  function update(){
+    ticking = false;
+    const rect = section.getBoundingClientRect();
+    const total = section.offsetHeight - window.innerHeight;
+    if(total <= 0) return;
+    const p = Math.min(Math.max(-rect.top / total, 0), 1);
+
+    /* Position: centre the card at fractional index `idx`. */
+    const idx = p * (n - 1);
+    const lo0 = Math.floor(idx), hi0 = Math.min(lo0 + 1, n - 1), f0 = idx - lo0;
+    /* Centre on the real laid-out position. offsetLeft/offsetWidth are layout values,
+       unaffected by the scale() the inactive cards carry. */
+    const c = i => stages[i].offsetLeft + stages[i].offsetWidth / 2;
+    const centre = c(lo0) + (c(hi0) - c(lo0)) * f0;
+    rail.style.transform = `translate3d(${window.innerWidth/2 - centre}px,0,0)`;
+
+    /* Active card + step markers */
+    const active = Math.round(idx);
+    stages.forEach((s,i)=>s.classList.toggle('on', i === active));
+    steps.forEach((s,i)=>s.classList.toggle('on', i <= active));
+
+    /* Survivor counter interpolates smoothly between stage outputs. */
+    const lo = Math.floor(idx), hi = Math.min(lo+1, n-1), f = idx - lo;
+    const val = survivors[lo] + (survivors[hi] - survivors[lo]) * f;
+    countEl.textContent = fmt(val);
+    /* Every stage figure is measured, so an interpolation between two of them is
+       animation rather than a claim. The placeholder styling stays wired up for any
+       stage later marked ok:false. */
+    const near = Math.round(idx);
+    countEl.classList.toggle('ph', !stageData[near].ok);
+    labelEl.textContent = stageData[near].label;
+    fillEl.style.width = Math.max((val / survivors[0]) * 100, 1.5) + '%';
+  }
+
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ ticking = true; requestAnimationFrame(update); }
+  }, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
+
+/* ===========================================================================
+   5. PROGRESS RAIL + TOP BAR
+   =========================================================================== */
+(function railNav(){
+  const links = [...document.querySelectorAll('.rail-nav a')];
+  links.forEach(a=>{
+    const s = document.createElement('span');
+    s.textContent = a.dataset.t;
+    a.appendChild(s);
+  });
+  const targets = links.map(a=>document.querySelector(a.getAttribute('href')));
+  const bar = document.getElementById('topbar');
+
+  let ticking = false;
+  function update(){
+    ticking = false;
+    const y = window.scrollY + window.innerHeight*0.35;
+    let cur = 0;
+    targets.forEach((t,i)=>{ if(t && t.offsetTop <= y) cur = i; });
+    links.forEach((a,i)=>a.classList.toggle('on', i === cur));
+    const max = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = (max > 0 ? (window.scrollY/max)*100 : 0) + '%';
+  }
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ ticking = true; requestAnimationFrame(update); }
+  }, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
