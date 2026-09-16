@@ -230,6 +230,41 @@ section{position:relative;}
 .pipe-note{max-width:620px;margin:16px auto 0;font-size:13px;line-height:1.5;opacity:.55;text-align:center;}
 
 /* ===========================================================================
+   SHORT WINDOWS
+   The sticky stage is head + rail + meter inside 100vh. Below roughly 820px the
+   three no longer fit, and because the rail wrapper is the only one that can
+   clip, the stage cards lose their bottom edge. Shrink the parts instead.
+   =========================================================================== */
+@media (max-height: 820px){
+  .pipe-head{margin-bottom:14px;}
+  .pipe-head h2{font-size:clamp(22px,2.4vw,32px);}
+  .stage{padding:clamp(15px,1.5vw,21px);border-radius:26px;}
+  .stage p{font-size:13.5px;line-height:1.46;}
+  .stage h3{font-size:20px;}
+  .stage-ico{width:42px;height:42px;margin-bottom:11px;}
+  .stage-ico svg{width:20px;height:20px;}
+  .stage-foot{padding-top:13px;}
+  .stage-drop{margin-top:10px;min-height:22px;}
+  .pipe-meter{margin-top:16px;}
+  .pipe-meter .num-xl{font-size:clamp(40px,7vh,68px);}
+  .pipe-note{margin-top:10px;font-size:12px;}
+}
+@media (max-height: 680px){
+  .pipe-head{margin-bottom:9px;}
+  .pipe-head h2{font-size:22px;}
+  .pipe-head .pill{padding:7px 18px;font-size:11px;}
+  .stage{padding:14px;}
+  .stage p{font-size:12.5px;line-height:1.4;}
+  .stage h3{font-size:18px;}
+  .stage-ico{width:34px;height:34px;margin-bottom:8px;}
+  .stage-ico svg{width:17px;height:17px;}
+  .stage-foot{padding-top:10px;}
+  .stage-foot .num-md{font-size:30px;}
+  .pipe-meter .num-xl{font-size:44px;}
+  .pipe-note{display:none;}
+}
+
+/* ===========================================================================
    SYSTEM ARCHITECTURE DIAGRAM
    Two zone panels, a hand-off arrow between them, and the two return paths
    that make the whole thing a loop rather than a pipeline.
@@ -1310,7 +1345,27 @@ function countUp(el){
   });
   const steps = [...stepsEl.children];
 
-  const fmt = v => Math.round(v).toLocaleString('en-US');
+
+  const fmtN = v => Math.round(v).toLocaleString('en-US');
+  let shownStage = -1, animId = 0;
+  function setStage(i){
+    if(i === shownStage) return;
+    const from = shownStage < 0 ? survivors[i] : survivors[shownStage];
+    const to = survivors[i];
+    shownStage = i;
+    labelEl.textContent = stageData[i].label;
+    countEl.classList.toggle('ph', !stageData[i].ok);
+    cancelAnimationFrame(animId);
+    const t0 = performance.now(), dur = 550;
+    const tick = t => {
+      const p = Math.min((t - t0) / dur, 1);
+      const v = from + (to - from) * (1 - Math.pow(1 - p, 3));
+      countEl.textContent = fmtN(v);
+      fillEl.style.width = Math.max((v / survivors[0]) * 100, 1.5) + '%';
+      if (p < 1) animId = requestAnimationFrame(tick);
+    };
+    animId = requestAnimationFrame(tick);
+  }
 
   let ticking = false;
   function update(){
@@ -1334,16 +1389,11 @@ function countUp(el){
     stages.forEach((s,i)=>s.classList.toggle('on', i === active));
     steps.forEach((s,i)=>s.classList.toggle('on', i <= active));
 
-    /* Survivor counter interpolates smoothly between stage outputs. */
-    const lo = Math.floor(idx), hi = Math.min(lo+1, n-1), f = idx - lo;
-    const val = survivors[lo] + (survivors[hi] - survivors[lo]) * f;
-    countEl.textContent = fmt(val);
-    /* Every stage figure is measured, so an interpolation between two of them is
-       animation rather than a claim. The placeholder styling stays wired up for any
-       stage later marked ok:false. */
-    const near = Math.round(idx);
-    countEl.classList.toggle('ph', !stageData[near].ok);
-    labelEl.textContent = stageData[near].label;
+    /* The counter now lands on the active stage's exact figure rather than an
+       interpolation, because every card prints its own number and a meter reading
+       180 under a card reading 184 just looks broken. It still animates between
+       stages, so the fall is intact. */
+    setStage(active);
     fillEl.style.width = Math.max((val / survivors[0]) * 100, 1.5) + '%';
   }
 
@@ -1366,6 +1416,27 @@ function countUp(el){
   });
   const targets = links.map(a=>document.querySelector(a.getAttribute('href')));
   const bar = document.getElementById('topbar');
+
+  const fmtN = v => Math.round(v).toLocaleString('en-US');
+  let shownStage = -1, animId = 0;
+  function setStage(i){
+    if(i === shownStage) return;
+    const from = shownStage < 0 ? survivors[i] : survivors[shownStage];
+    const to = survivors[i];
+    shownStage = i;
+    labelEl.textContent = stageData[i].label;
+    countEl.classList.toggle('ph', !stageData[i].ok);
+    cancelAnimationFrame(animId);
+    const t0 = performance.now(), dur = 550;
+    const tick = t => {
+      const p = Math.min((t - t0) / dur, 1);
+      const v = from + (to - from) * (1 - Math.pow(1 - p, 3));
+      countEl.textContent = fmtN(v);
+      fillEl.style.width = Math.max((v / survivors[0]) * 100, 1.5) + '%';
+      if (p < 1) animId = requestAnimationFrame(tick);
+    };
+    animId = requestAnimationFrame(tick);
+  }
 
   let ticking = false;
   function update(){
