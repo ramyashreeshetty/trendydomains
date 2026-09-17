@@ -533,7 +533,7 @@ section{position:relative;}
     <h1 class="display" data-rv>Trendy Domains</h1>
     <div data-rv data-d="1" style="margin:24px auto;"><div class="aline" style="margin:0 auto;"></div></div>
     <p class="lede" data-rv data-d="2" style="max-width:860px;margin:0 auto;font-size:clamp(22px,2.1vw,36px);line-height:1.32;opacity:.82;">
-      Trends expire. Domains don&rsquo;t.<br>We auction the overlap.
+      Trends expire. Domains don&rsquo;t.<br>We find the overlap first.
     </p>
     <div data-rv data-d="3" style="margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
       <span class="pill"><span style="opacity:.45;">Team:</span>&nbsp;Last Level Maniacs</span>
@@ -550,7 +550,7 @@ section{position:relative;}
   <div class="glow b"></div>
   <div class="dotgrid"></div>
   <div class="wrap" style="position:relative;z-index:2;text-align:center;">
-    <h1 data-rv style="max-width:19ch;margin:0 auto;">We turned a week of trending searches into a live auction board.</h1>
+    <h1 data-rv style="max-width:19ch;margin:0 auto;">We turned a week of trending searches into a ranked list of names you can still register.</h1>
     <p class="lede" data-rv data-d="1" style="margin:20px auto 0;max-width:46ch;">No human picked any of it: not the keywords, the names, the extensions or the prices.</p>
 
     <div class="bigthree" data-rv data-d="2" style="margin-top:46px;">
@@ -568,8 +568,8 @@ section{position:relative;}
       <div class="arrowcol"><div></div></div>
       <div class="step">
         <div class="num num-md" style="color:var(--coral);">28</div>
-        <div class="label" style="margin-top:14px;">Live auctions right now</div>
-        <p class="sm" style="margin-top:10px;">Four regional boards, refilling themselves as lots close.</p>
+        <div class="label" style="margin-top:14px;">Put in front of real buyers</div>
+        <p class="sm" style="margin-top:10px;">A live test of whether the signal actually converts.</p>
       </div>
     </div>
 
@@ -668,33 +668,47 @@ section{position:relative;}
 </section>
 
 <!-- =====================================================================
-     BEAT ONE: THE PROBLEM
+     THE GAP
+     Parag's framing: short-lived trends fall between cheap standard
+     inventory and evergreen-priced premium. The 4 hour median is measured
+     from our own google_keywords table, 8,823 completed trends.
      ===================================================================== -->
 <section class="chapter fitpage dense" id="problem" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
   <div class="wrap">
-    <div data-rv><span class="pill f-lav">the problem</span></div>
-    <h1 data-rv data-d="1" style="margin-top:22px;max-width:19ch;">A registry never runs out of names. It runs out of reasons.</h1>
+    <div data-rv><span class="pill f-lav">The gap</span></div>
+    <h1 data-rv data-d="1" style="margin-top:20px;max-width:21ch;">A trend lives four hours. Pricing moves in quarters.</h1>
 
-    <div style="margin-top:46px;" data-rv data-d="2">
+    <div style="margin-top:32px;" data-rv data-d="2">
       <div class="dotfield" id="dotfield"></div>
       <p class="sm" style="margin-top:12px;opacity:.55;">Every dot is a name somebody could register this morning. The coral ones are the only ones anybody is thinking about.</p>
     </div>
 
-    <div class="grid2" style="margin-top:40px;">
+    <div class="grid3" style="margin-top:34px;">
       <div class="card" data-rv data-d="1">
-        <div class="num num-xl" style="color:var(--coral);" data-count="12.4" data-suffix="M">0</div>
-        <div class="label" style="margin-top:14px;">Names already taken, reserved or premium</div>
-        <p class="sm" style="margin-top:10px;">Everything left is effectively unbounded. Supply has never been the constraint.</p>
-        <div class="src">Radix inventory tables &middot; read 16 Sep 2026</div>
+        <div class="num num-md" style="color:var(--coral);">4 hrs</div>
+        <div class="label" style="margin-top:12px;">Median life of a trending keyword</div>
+        <p class="sm" style="margin-top:8px;">89% are finished inside a day. Four of 8,823 lasted a week.</p>
+        <div class="src">Our own trend table, 8,823 completed trends</div>
       </div>
       <div class="card" data-rv data-d="2">
-        <div class="num num-xl" style="color:var(--violet);">36&times;</div>
-        <div class="label" style="margin-top:14px;">What the same asset fetches once somebody wants it</div>
-        <p class="sm" style="margin-top:10px;">A $549 median resale against a $15 registration. Price was never the constraint either.</p>
+        <div class="num num-md" style="color:var(--sky);">710,552</div>
+        <div class="label" style="margin-top:12px;">Names already priced as premium</div>
+        <p class="sm" style="margin-top:8px;">Priced on evergreen value, set long in advance. A four-hour window is invisible to it.</p>
+        <div class="src">Radix premium inventory</div>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="num num-md" style="color:var(--violet);">36&times;</div>
+        <div class="label" style="margin-top:12px;">What the same name fetches once somebody wants it</div>
+        <p class="sm" style="margin-top:8px;">$549 median resale against a $15 registration.</p>
         <div class="src">NameBio &amp; Sedo, 2024</div>
       </div>
     </div>
 
+    <p data-rv data-d="2" style="margin-top:28px;max-width:66ch;">
+      Standard inventory is cheap and undifferentiated. Premium is priced for names that are worth something
+      every year. <em>A keyword that matters for one afternoon falls straight between them, and nothing in the
+      industry is built to see it in time.</em>
+    </p>
   </div>
 </section>
 
@@ -728,9 +742,9 @@ section{position:relative;}
     </div>
 
     <p data-rv data-d="2" style="margin-top:26px;max-width:58ch;">
-      Second-level names, inside extensions that already existed. They went to whoever typed fastest, and a
-      large share turned out to be fraud. <em>We are proposing the same demand, served by the registry, with
-      a trademark gate in front.</em>
+      Four thousand people a day were hunting for these names with nothing to help them find a good one, and a
+      large share of what got registered turned out to be fraud. <em>The demand is real and fast. What is
+      missing is the tool that points it at names worth having.</em>
     </p>
     <div class="src" style="margin-top:14px;">CircleID &middot; Krebs on Security &middot; March 2020</div>
   </div>
@@ -747,17 +761,18 @@ section{position:relative;}
 <section class="chapter fitpage" id="board">
   <div class="wrap" style="text-align:center;">
     <div data-rv><span class="pill f-lav">What we built</span></div>
-    <h1 data-rv data-d="1" style="margin:18px auto 0;">The board.</h1>
+    <h1 data-rv data-d="1" style="margin:18px auto 0;">A domain-centric trend tracker.</h1>
     <p data-rv data-d="2" style="margin:14px auto 0;max-width:58ch;">
-      Four regional boards, ten Radix extensions, every name verified against live inventory the moment it was listed.
+      What is rising right now, per region, and the names still free to register against it. Ten extensions,
+      every one checked against live inventory and cleared for trademark.
     </p>
     <div data-rv data-d="2" style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
       <span class="pill xs">India</span><span class="pill xs">United States</span>
       <span class="pill xs">UAE</span><span class="pill xs">Worldwide</span>
-      <span class="pill xs f-yellow"><span class="num" style="font-size:11px;">28</span>&nbsp;auctions live now</span>
+      <span class="pill xs f-yellow"><span class="num" style="font-size:11px;">172</span>&nbsp;names surfaced</span>
     </div>
 
-    <div data-rv data-d="3" style="margin:22px auto 0;max-width:858px;">
+    <div data-rv data-d="3" style="margin:18px auto 0;max-width:812px;">
       <div class="browser">
         <div class="browser-bar"><i></i><i></i><i></i><span class="url">trendydomains.radix.site</span></div>
         <div class="frame" style="aspect-ratio:16/9;">
@@ -783,13 +798,13 @@ section{position:relative;}
   <div class="wrap" style="position:relative;z-index:2;">
     <div data-rv><span class="pill f-lav">The system</span></div>
     <h1 data-rv data-d="1" style="margin-top:22px;max-width:20ch;">Two halves, one loop.</h1>
-    <p data-rv data-d="2" style="margin-top:12px;max-width:62ch;">One decides <em>what is worth selling</em>. The other decides <em>how it sells</em>. They share one table, and hand names back to each other.</p>
+    <p data-rv data-d="2" style="margin-top:12px;max-width:62ch;">One works out <em>which names are worth having today</em>. The other gets them in front of somebody. They share one table, and hand names back to each other.</p>
 
     <div class="arch compact" data-rv data-d="3" style="margin-top:24px;">
 
       <div class="zone supply">
         <div class="zone-head">
-          <span class="pill xs f-sky">Supply</span>
+          <span class="pill xs f-sky">Intelligence</span>
           <h3 style="margin-top:12px;">Domain quality engine</h3>
           <p class="sm" style="margin-top:6px;">Batch. Minutes, not milliseconds.</p>
         </div>
@@ -815,8 +830,8 @@ section{position:relative;}
 
       <div class="zone demand">
         <div class="zone-head">
-          <span class="pill xs f-peach">Demand</span>
-          <h3 style="margin-top:12px;">Bidding system</h3>
+          <span class="pill xs f-peach">Delivery</span>
+          <h3 style="margin-top:12px;">Getting it to a buyer</h3>
           <p class="sm" style="margin-top:6px;">Live. Reads Postgres and nothing else.</p>
         </div>
         <div class="fnode f-lime">Board &middot; 4 regions &times; 7 slots</div>
@@ -1006,15 +1021,14 @@ section{position:relative;}
      ===================================================================== -->
 <section class="chapter fitpage dense" id="bidding" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
   <div class="wrap">
-    <div data-rv><span class="pill f-lav">The system &middot; demand side</span></div>
-    <h1 data-rv data-d="1" style="margin-top:22px;max-width:20ch;">The bidding system holds real money against a moving clock.</h1>
-    <p data-rv data-d="2" style="margin-top:14px;max-width:60ch;">
-      <span class="num" style="font-size:19px;">4</span> regions &times;
-      <span class="num" style="font-size:19px;">7</span> slots =
-      <span class="num" style="font-size:19px;">28</span> concurrent lots, refilled the moment one closes.
+    <div data-rv><span class="pill f-lav">The experiment</span></div>
+    <h1 data-rv data-d="1" style="margin-top:20px;max-width:24ch;">We built an auction to answer one question: does the signal convert?</h1>
+    <p data-rv data-d="2" style="margin-top:12px;max-width:66ch;">
+      <span class="num" style="font-size:19px;">28</span> lots, real money, a moving clock. A measurement
+      instrument, not a proposed business.
     </p>
 
-    <div class="grid3" style="margin-top:26px;gap:14px;">
+    <div class="grid3" style="margin-top:22px;gap:13px;">
       <div class="card" data-rv data-d="1">
         <div class="card-icon f-coral">
           <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="3"/><path d="M3 11h18"/><path d="M7 15h3"/></svg>
@@ -1069,46 +1083,54 @@ section{position:relative;}
 
 
 <!-- =====================================================================
-     BEAT FOUR: WHY A REGISTRY CARES
-     SAY: this is the section that wins the room.
+     WHERE THIS SHOULD SIT
+     The positioning slide. Says out loud that a registry pre-registering
+     trend names is bad faith, and puts the value in the intelligence layer.
      ===================================================================== -->
 <section class="chapter fitpage dense" id="business" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
   <div class="wrap">
-    <div data-rv><span class="pill f-lav">why a registry cares</span></div>
-    <h1 data-rv data-d="1" style="margin-top:22px;max-width:18ch;">There is a market for this. None of it is primary.</h1>
+    <div data-rv><span class="pill f-lav">Where this should sit</span></div>
+    <h1 data-rv data-d="1" style="margin-top:20px;max-width:22ch;">The intelligence is the product. The inventory is not.</h1>
 
-    <div class="grid2" style="margin-top:44px;">
-      <div class="card" data-rv data-d="1">
-        <div class="num num-md" style="color:var(--coral);">$185M</div>
-        <div class="label" style="margin-top:12px;">Domains sold on the aftermarket in 2024</div>
-        <p class="sm" style="margin-top:12px;">Across 144,700 sales, at a $549 median. Dollar volume up 32.8% year on year.</p>
+    <div class="grid3" style="margin-top:34px;">
+      <div class="card" data-rv data-d="1" style="background:var(--cream);">
+        <div class="card-icon f-coral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </div>
+        <h3>What we are not proposing</h3>
+        <p class="sm" style="margin-top:12px;">
+          A registry registering trending names ahead of the market is warehousing, whatever it is priced at.
+          Holding inventory you created the demand for is bad faith, and an auction run on it has a compliance
+          problem before it has a business problem.
+        </p>
+      </div>
+      <div class="card" data-rv data-d="2">
+        <div class="card-icon f-lime">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/><path d="M8 11h6M11 8v6"/></svg>
+        </div>
+        <h3>What it actually is</h3>
+        <p class="sm" style="margin-top:12px;">
+          A domain-centric Google Trends. Keyword velocity by region, semantically matched to names that are
+          still free, screened for trademark and brandability, linking out to buy. The registry never touches
+          the name; the buyer registers it themselves.
+        </p>
       </div>
       <div class="card" data-rv data-d="3">
-        <div class="num num-md" style="color:var(--violet);">100%</div>
-        <div class="label" style="margin-top:12px;">Of it is resale</div>
-        <p class="sm" style="margin-top:12px;">Expired names, domainer stock. Nobody auctions a name that was never sold.</p>
+        <div class="card-icon f-sky">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg>
+        </div>
+        <h3>What Radix gets</h3>
+        <p class="sm" style="margin-top:12px;">
+          Demand data available nowhere else: which keyword and extension pairings people actually chase, by
+          region, by day. That feeds pricing, marketing and portfolio decisions, with no inventory held and
+          nothing to defend.
+        </p>
       </div>
     </div>
 
-    <div class="grid2" style="margin-top:40px;">
-      <div class="card" data-rv data-d="2" style="background:var(--cream);">
-        <div class="card-icon f-peach">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l7 7 3-3 6 6"/><path d="M20 17v-5h-5"/></svg>
-        </div>
-        <h3>The markdown playbook</h3>
-        <p class="sm" style="margin-top:14px;">
-          Registries fund first-year promotions below wholesale, then recover on renewal. It buys registrations, not attachment, and tells you nothing about what anyone would have paid.
-        </p>
-      </div>
-      <div class="card" data-rv data-d="3">
-        <div class="card-icon f-lime">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l7-7 3 3 6-6"/><path d="M20 7v5h-5"/></svg>
-        </div>
-        <h3>The primary-market gap</h3>
-        <p class="sm" style="margin-top:14px;">
-          Every dollar of that $185M is resale. We auction names never registered: no previous owner, no acquisition cost, no seller to split with. The clearing price is all registry.
-        </p>
-      </div>
+    <div data-rv data-d="3" style="margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <span class="pill xs f-yellow">Closest comparable: Atom.com</span>
+      <span class="sm" style="opacity:.62;">and it works the aftermarket. Nobody is doing this on available standard inventory, at trend speed.</span>
     </div>
   </div>
 </section>
@@ -1154,12 +1176,12 @@ section{position:relative;}
   <div class="glow b"></div>
   <div class="wrap" style="position:relative;z-index:2;">
     <div data-rv><span class="pill f-lav">What's next</span></div>
-    <h1 data-rv data-d="1" style="margin-top:22px;max-width:22ch;">Built as a one-shot. Architected to run forever.</h1>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:23ch;">A one-shot today. A live tracker from here.</h1>
     <div class="grid3" style="margin-top:44px;">
       <div class="card" data-rv data-d="1">
         <div class="card-icon f-coral"><span class="h3">I</span></div>
-        <h3>Continuous runs</h3>
-        <p class="sm" style="margin-top:12px;">The pool upserts rather than rebuilds, so a name survives its keyword going quiet. It also switches durability back on: today every candidate sits at <span class="num" style="font-size:15px;">seen_count 1</span>, so a tenth of the score does no work.</p>
+        <h3>Always on</h3>
+        <p class="sm" style="margin-top:12px;">A four-hour median means the run has to be continuous, not daily. The pool already upserts rather than rebuilds, so a name survives its keyword going quiet.</p>
       </div>
       <div class="card" data-rv data-d="2">
         <div class="card-icon f-sky"><span class="h3">II</span></div>
@@ -1168,8 +1190,8 @@ section{position:relative;}
       </div>
       <div class="card" data-rv data-d="3">
         <div class="card-icon f-lime"><span class="h3">III</span></div>
-        <h3>Bids feed pricing</h3>
-        <p class="sm" style="margin-top:12px;">Every closed auction is a willingness-to-pay reading on a name the registry priced flat. That signal outlives the auction.</p>
+        <h3>Out to the buyer</h3>
+        <p class="sm" style="margin-top:12px;">Every surfaced name links out to register, at Namify or any reseller. We keep the signal; the sale happens where it should.</p>
       </div>
     </div>
   </div>
