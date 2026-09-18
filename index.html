@@ -376,8 +376,10 @@ section{position:relative;}
 .teamgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.2vw,18px);}
 @media(max-width:980px){.teamgrid{grid-template-columns:repeat(2,1fr);}}
 .member{background:var(--white);border:2px solid var(--outline);border-radius:26px;
-  padding:clamp(16px,1.6vw,22px);box-shadow:7px 7px 0 var(--shadow);text-align:left;}
-.member .initial{width:46px;height:46px;font-size:20px;border-radius:50%;border:2px solid var(--outline);
+  padding:clamp(16px,1.6vw,22px);box-shadow:7px 7px 0 var(--shadow);text-align:center;}
+.member .initial{margin-left:auto;margin-right:auto;}
+.member h3{font-size:clamp(15px,1.15vw,18px);line-height:1.25;}
+.member .initial{width:46px;height:46px;font-size:15px;font-family:var(--f-body);font-weight:700;letter-spacing:.04em;border-radius:50%;border:2px solid var(--outline);
   display:flex;align-items:center;justify-content:center;font-family:var(--f-display);
   font-size:23px;font-weight:700;margin-bottom:16px;}
 
@@ -407,6 +409,9 @@ section{position:relative;}
 
 /* centred flow */
 .flow-mini.center{justify-content:center;}
+.flow-mini.even .node{width:clamp(168px,17vw,236px);justify-content:center;text-align:center;
+  white-space:normal;line-height:1.3;min-height:74px;display:flex;align-items:center;padding:14px 18px;}
+.flow-mini.even .link{width:clamp(30px,3.4vw,54px);}
 
 /* ===========================================================================
    BLOCKED LIST: one row per name, reason beside it
@@ -445,6 +450,37 @@ section{position:relative;}
   display:flex;align-items:center;justify-content:center;font-family:var(--f-display);
   font-size:26px;font-weight:700;opacity:.45;margin-bottom:16px;}
 .shot-empty .label{opacity:.4;}
+
+/* ===========================================================================
+   SEARCH MOCK: says "this was a search trend" without a sentence
+   =========================================================================== */
+.searchmock{display:flex;align-items:center;gap:clamp(14px,1.6vw,22px);border:2px solid var(--outline);
+  border-radius:9999px;background:var(--white);padding:clamp(12px,1.4vw,18px) clamp(22px,2.6vw,36px);
+  box-shadow:8px 8px 0 var(--shadow);max-width:660px;}
+.searchmock svg{width:clamp(22px,2.2vw,30px);height:auto;flex:none;opacity:.55;}
+.searchmock .term{font-family:var(--f-num);font-variation-settings:"wdth" 112;font-weight:800;
+  font-size:clamp(30px,3.6vw,54px);letter-spacing:-.02em;line-height:1.05;}
+.searchmock .when{margin-left:auto;font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;opacity:.5;text-align:right;line-height:1.4;flex:none;}
+
+/* ===========================================================================
+   TIMELINE: the gap, drawn to scale
+   Two bars on one axis. Four hours against ninety days is 0.2%, so the trend
+   bar is pinned to a visible minimum and labelled outside. The asymmetry is
+   the whole argument.
+   =========================================================================== */
+.timeline{max-width:940px;}
+.tl-row{display:flex;align-items:center;gap:clamp(12px,1.6vw,22px);margin-bottom:16px;}
+.tl-label{width:clamp(150px,17vw,250px);flex:none;text-align:right;font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;opacity:.62;line-height:1.35;}
+.tl-track{flex:1;height:48px;border:2px solid var(--outline);border-radius:9999px;
+  background:var(--cream);overflow:hidden;}
+.tl-fill{height:100%;border-radius:9999px;border-right:2px solid var(--outline);}
+.tl-value{width:clamp(96px,10vw,140px);flex:none;font-family:var(--f-num);
+  font-variation-settings:"wdth" 110;font-weight:800;font-size:clamp(18px,1.8vw,26px);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+.tl-note{display:flex;align-items:flex-start;gap:12px;margin-top:20px;
+  border:2px dashed var(--outline);border-radius:22px;padding:16px 22px;}
 
 /* ===========================================================================
    SOLD GRID: the closing visual: real names, real prices
@@ -496,10 +532,12 @@ section{position:relative;}
 
 <nav class="rail-nav" id="railNav">
   <a href="#top"      data-t="Top"></a>
+  <a href="#team"     data-t="The team"></a>
   <a href="#hook"     data-t="What we did"></a>
   <a href="#example"  data-t="One of them"></a>
   <a href="#problem"  data-t="The problem"></a>
   <a href="#proof"    data-t="The proof"></a>
+  <a href="#architecture" data-t="The system"></a>
   <a href="#engine"   data-t="The engine"></a>
   <a href="#gate"     data-t="The gate"></a>
   <a href="#bidding"  data-t="Bidding system"></a>
@@ -530,11 +568,28 @@ section{position:relative;}
     <p class="lede" data-rv data-d="2" style="max-width:860px;margin:0 auto;font-size:clamp(22px,2.1vw,36px);line-height:1.32;opacity:.82;">
       Trends expire. Domains don&rsquo;t.<br>We find the overlap first.
     </p>
-    <div data-rv data-d="3" style="margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <span class="pill"><span style="opacity:.45;">Team:</span>&nbsp;Last Level Maniacs</span>
-    </div>
   </div>
   <div class="scrollcue"><span class="label">Scroll</span><div class="bar"></div></div>
+</section>
+
+<!-- =====================================================================
+     THE TEAM
+     Slide two: who is talking, before anything else.
+     ===================================================================== -->
+<section class="chapter fitpage" id="team">
+  <div class="glow b"></div>
+  <div class="wrap" style="text-align:center;">
+    <div data-rv><span class="pill f-lav">Built by</span></div>
+    <h1 data-rv data-d="1" style="margin:20px auto 0;">Last Level Maniacs</h1>
+    <p class="lede" data-rv data-d="2" style="margin:16px auto 0;max-width:40ch;">Five people, one week.</p>
+    <div class="teamgrid" data-rv data-d="3" style="margin-top:40px;">
+      <div class="member"><div class="initial f-lime">RJ</div><h3>Rohan Jaiswal</h3><div class="label" style="margin-top:8px;">Builder</div></div>
+      <div class="member"><div class="initial f-lav">VC</div><h3>Vaibhav Chauhan</h3><div class="label" style="margin-top:8px;">Designer</div></div>
+      <div class="member"><div class="initial f-lime">SS</div><h3>Sameer Shaikh</h3><div class="label" style="margin-top:8px;">Builder</div></div>
+      <div class="member"><div class="initial f-peach">RS</div><h3>Ramyashree Shetty</h3><div class="label" style="margin-top:8px;">Storyteller</div></div>
+      <div class="member"><div class="initial f-violet">BB</div><h3>Bhavesh Bhide</h3><div class="label" style="margin-top:8px;">Thinker</div></div>
+    </div>
+  </div>
 </section>
 
 <!-- =====================================================================
@@ -637,7 +692,7 @@ section{position:relative;}
       </figure>
     </div>
 
-    <div class="flow-mini center" data-rv data-d="3" style="margin-top:32px;">
+    <div class="flow-mini center even" data-rv data-d="3" style="margin-top:34px;">
       <div class="node f-yellow">1980s photo prompt chatgpt</div>
       <div class="link"><i class="packet"></i></div>
       <div class="node f-lime">retrophoto.fun</div>
@@ -645,105 +700,181 @@ section{position:relative;}
       <div class="node f-coral">Sold &middot; $24.99</div>
     </div>
 
-    <div class="grid2" style="margin-top:28px;text-align:left;">
-      <div class="card" data-rv data-d="1">
-        <div class="card-headline h3">Shortened on meaning</div>
-        <p class="sm" style="margin-top:10px;">Not by deleting spaces. The alternative was <em>photoediting1980saiphotoprompt</em>: a valid domain, a worthless product.</p>
-      </div>
-      <div class="card" data-rv data-d="2">
-        <div class="card-headline h3">Checked, then cleared</div>
-        <p class="sm" style="margin-top:10px;">.fun rated against the category, confirmed unregistered against 12.4M rows, then read once more as a finished name. Score <span class="num" style="font-size:15px;">72.1</span>.</p>
-      </div>
-    </div>
+    <p data-rv data-d="4" style="margin:34px auto 0;max-width:56ch;">
+      Shortened on meaning, not by deleting spaces. The extension was rated against the category, the name was
+      confirmed unregistered against 12.4 million rows, and then read once more as a finished domain before
+      anyone could see it.
+    </p>
   </div>
 </section>
 
 <!-- =====================================================================
      THE GAP
-     Parag's framing: short-lived trends fall between cheap standard
-     inventory and evergreen-priced premium. The 4 hour median is measured
-     from our own google_keywords table, 8,823 completed trends.
+     Drawn to scale so it needs no explaining: the trend window against the
+     cycle on which premium inventory actually gets priced.
      ===================================================================== -->
 <section class="chapter fitpage dense" id="problem" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
   <div class="wrap">
     <div data-rv><span class="pill f-lav">The gap</span></div>
-    <h1 data-rv data-d="1" style="margin-top:20px;max-width:21ch;">A trend lives four hours. Pricing moves in quarters.</h1>
+    <h1 data-rv data-d="1" style="margin-top:18px;max-width:23ch;">The window is four hours. We price in ninety days.</h1>
 
-    <div style="margin-top:32px;" data-rv data-d="2">
-      <div class="dotfield" id="dotfield"></div>
-      <p class="sm" style="margin-top:12px;opacity:.55;">Every dot is a name somebody could register this morning. The coral ones are the only ones anybody is thinking about.</p>
+    <div class="timeline" data-rv data-d="2" style="margin-top:36px;">
+      <div class="tl-row">
+        <div class="tl-label">A trending keyword</div>
+        <div class="tl-track"><div class="tl-fill" style="width:6px;background:var(--coral);"></div></div>
+        <div class="tl-value" style="color:var(--coral);">4 hrs</div>
+      </div>
+      <div class="tl-row" style="margin-bottom:0;">
+        <div class="tl-label">When premium inventory is next priced</div>
+        <div class="tl-track"><div class="tl-fill" style="width:100%;background:var(--sky);"></div></div>
+        <div class="tl-value">90 days</div>
+      </div>
+
+      <div class="tl-note">
+        <span class="pill xs f-yellow" style="flex:none;">Same scale</span>
+        <p class="sm" style="margin:0;">
+          By the time that name is looked at again, the reason anybody wanted it has been over for three months.
+          Standard inventory never noticed it at all: it is priced the same on the day the world is searching for it
+          as on every other day.
+        </p>
+      </div>
     </div>
 
-    <div class="grid3" style="margin-top:34px;">
+    <div class="grid2" style="margin-top:26px;">
       <div class="card" data-rv data-d="1">
-        <div class="num num-md" style="color:var(--coral);">4 hrs</div>
-        <div class="label" style="margin-top:12px;">Median life of a trending keyword</div>
-        <p class="sm" style="margin-top:8px;">89% are finished inside a day. Four of 8,823 lasted a week.</p>
-        <div class="src">Our own trend table, 8,823 completed trends</div>
+        <div class="label">Measured, not assumed</div>
+        <p class="sm" style="margin-top:8px;">Four hours is the median across <span class="num" style="font-size:15px;">8,823</span> completed trends in our own table. <span class="num" style="font-size:15px;">89%</span> are finished inside a day; four lasted a week.</p>
       </div>
       <div class="card" data-rv data-d="2">
-        <div class="num num-md" style="color:var(--sky);">710,552</div>
-        <div class="label" style="margin-top:12px;">Names already priced as premium</div>
-        <p class="sm" style="margin-top:8px;">Priced on evergreen value, set long in advance. A four-hour window is invisible to it.</p>
-        <div class="src">Radix premium inventory</div>
-      </div>
-      <div class="card" data-rv data-d="3">
-        <div class="num num-md" style="color:var(--violet);">36&times;</div>
-        <div class="label" style="margin-top:12px;">What the same name fetches once somebody wants it</div>
-        <p class="sm" style="margin-top:8px;">$549 median resale against a $15 registration.</p>
-        <div class="src">NameBio &amp; Sedo, 2024</div>
+        <div class="label">What sits either side of the gap</div>
+        <p class="sm" style="margin-top:8px;"><span class="num" style="font-size:15px;">710,552</span> names priced as premium on evergreen value, and millions of standard names priced as a commodity. Nothing is built for the afternoon in between.</p>
       </div>
     </div>
-
-    <p data-rv data-d="2" style="margin-top:28px;max-width:66ch;">
-      Standard inventory is cheap and undifferentiated. Premium is priced for names that are worth something
-      every year. <em>A keyword that matters for one afternoon falls straight between them, and nothing in the
-      industry is built to see it in time.</em>
-    </p>
   </div>
 </section>
 
 <!-- =====================================================================
-     THE PROOF: trend-driven registration at the second level
-     This is the right layer. The .ai boom proves a TLD can take off;
-     it does not prove a trending keyword sells a specific domain.
-     COVID does, and it does it inside extensions that already existed.
+     THE PROOF
+     The keyword has to be the loudest thing on the slide. Everything else
+     is support for it.
      ===================================================================== -->
 <section class="chapter fitpage dense" id="proof" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
   <div class="wrap">
     <div data-rv><span class="pill f-lav">The proof</span></div>
-    <h1 data-rv data-d="1" style="margin-top:20px;max-width:20ch;">This already happens. Nobody is serving it.</h1>
-    <p class="lede" data-rv data-d="2" style="margin-top:14px;max-width:50ch;">One keyword, one month, in 2020.</p>
+    <h1 data-rv data-d="1" style="margin-top:18px;max-width:24ch;">It has happened before, at enormous scale.</h1>
 
-    <div data-rv data-d="3" style="margin-top:34px;max-width:920px;">
-      <div class="barrow"><div class="bl">December 2019</div><div class="track"><div class="fill" data-w="1" style="background:var(--lavender);"></div></div><div class="barval">&lt;10 / day</div></div>
-      <div class="barrow"><div class="bl">Early March 2020</div><div class="track"><div class="fill" data-w="9" style="background:var(--sky);"></div></div><div class="barval">~400 / day</div></div>
-      <div class="barrow" style="margin-bottom:0;"><div class="bl">After 11 March</div><div class="track"><div class="fill" data-w="100" style="background:var(--coral);"></div></div><div class="barval">4,000+ / day</div></div>
+    <div class="searchmock" data-rv data-d="2" style="margin-top:26px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+      <span class="term">covid</span>
+      <span class="when">Trending<br>March 2020</span>
     </div>
 
-    <div class="grid2" style="margin-top:34px;">
-      <div class="card" data-rv data-d="1">
-        <div class="num num-md" style="color:var(--coral);">+656%</div>
-        <div class="label" style="margin-top:10px;">Rise in average daily registrations, February to March 2020</div>
-      </div>
-      <div class="card" data-rv data-d="2">
-        <div class="num num-md" style="color:var(--violet);">3,011</div>
-        <div class="label" style="margin-top:10px;">Names containing &ldquo;covid&rdquo; or &ldquo;corona&rdquo; registered on 20 March alone, in the four largest extensions</div>
-      </div>
-    </div>
-
-    <p data-rv data-d="2" style="margin-top:26px;max-width:58ch;">
-      Four thousand people a day were hunting for these names with nothing to help them find a good one, and a
-      large share of what got registered turned out to be fraud. <em>The demand is real and fast. What is
-      missing is the tool that points it at names worth having.</em>
+    <p class="lede" data-rv data-d="3" style="margin-top:22px;max-width:56ch;">
+      Domains containing that one word, registered per day:
     </p>
-    <div class="src" style="margin-top:14px;">CircleID &middot; Krebs on Security &middot; March 2020</div>
+
+    <div data-rv data-d="3" style="margin-top:18px;max-width:940px;">
+      <div class="barrow"><div class="bl">December 2019</div><div class="track"><div class="fill" data-w="1" style="background:var(--lavender);"></div></div><div class="barval">under 10</div></div>
+      <div class="barrow"><div class="bl">Early March 2020</div><div class="track"><div class="fill" data-w="9" style="background:var(--sky);"></div></div><div class="barval">~400</div></div>
+      <div class="barrow" style="margin-bottom:0;"><div class="bl">After 11 March</div><div class="track"><div class="fill" data-w="100" style="background:var(--coral);"></div></div><div class="barval">4,000+</div></div>
+    </div>
+
+    <div class="grid2" style="margin-top:24px;">
+      <div class="card" data-rv data-d="1">
+        <div class="label">On the peak day alone</div>
+        <p class="sm" style="margin-top:8px;"><span class="num" style="font-size:15px;">3,011</span> names containing &ldquo;covid&rdquo; or &ldquo;corona&rdquo; were registered on 20 March, in the four largest extensions.</p>
+        <div class="src">CircleID &middot; Krebs on Security, 2020</div>
+      </div>
+      <div class="card" data-rv data-d="2" style="background:var(--cream);">
+        <div class="label">And nothing was helping them</div>
+        <p class="sm" style="margin-top:8px;">Four thousand people a day were guessing at names with no tool to tell them what was free, what was any good, or what would get them sued. A large share of what got registered turned out to be fraud.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 
 
 
+
+<!-- =====================================================================
+     SYSTEM ARCHITECTURE: the one-page map
+     SAY: point at the two boxes, then trace the two return arrows.
+     The loop is the thing worth pausing on.
+     ===================================================================== -->
+<section class="chapter fitpage" id="architecture">
+  <div class="glow b"></div>
+  <div class="dotgrid"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div data-rv><span class="pill f-lav">The system</span></div>
+    <h1 data-rv data-d="1" style="margin-top:22px;max-width:20ch;">Two halves, one loop.</h1>
+    <p data-rv data-d="2" style="margin-top:12px;max-width:62ch;">One works out <em>which names are worth having today</em>. The other gets them in front of somebody. They share one table, and hand names back to each other.</p>
+
+    <div class="arch compact" data-rv data-d="3" style="margin-top:24px;">
+
+      <div class="zone supply">
+        <div class="zone-head">
+          <span class="pill xs f-sky">Intelligence</span>
+          <h3 style="margin-top:12px;">Domain quality engine</h3>
+          <p class="sm" style="margin-top:6px;">Batch. Minutes, not milliseconds.</p>
+        </div>
+        <div class="fnode f-yellow">Google Trends &middot; X Trends</div>
+        <div class="fdown"></div>
+        <div class="fnode">Merge &amp; score attention</div>
+        <div class="fdown"></div>
+        <div class="fnode">Model screen: drop 90%</div>
+        <div class="fdown"></div>
+        <div class="fnode">Propose names</div>
+        <div class="fdown"></div>
+        <div class="fnode f-mint">Availability &middot; 12.4M rows</div>
+        <div class="fdown"></div>
+        <div class="fnode f-coral">Trademark &amp; quality gate</div>
+        <div class="fdown"></div>
+        <div class="fnode f-lime">domain_candidates</div>
+      </div>
+
+      <div class="arch-link">
+        <div class="arch-arrow"></div>
+        <span class="mini">Reserves<br>&amp; lists</span>
+      </div>
+
+      <div class="zone demand">
+        <div class="zone-head">
+          <span class="pill xs f-peach">Delivery</span>
+          <h3 style="margin-top:12px;">Getting it to a buyer</h3>
+          <p class="sm" style="margin-top:6px;">Live. Reads Postgres and nothing else.</p>
+        </div>
+        <div class="fnode f-lime">Board &middot; 4 regions &times; 7 slots</div>
+        <div class="fdown"></div>
+        <div class="fnode">Bid: escrow hold, row locked</div>
+        <div class="fdown"></div>
+        <div class="fnode f-yellow">Clock extends 24h per bid</div>
+        <div class="fdown"></div>
+        <div class="fnode">Scheduler closes what is due</div>
+        <div class="fdown"></div>
+        <div class="arch-split">
+          <div class="fnode f-lime" style="font-size:12px;">Won &rarr; portfolio</div>
+          <div class="fnode f-peach" style="font-size:12px;">Expired &rarr; pool</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="loopback" data-rv data-d="2" style="margin-top:20px;padding:16px 26px;gap:10px;">
+      <div class="loop-row">
+        <span class="pill xs f-lime">Won</span>
+        <span class="loop-line"></span>
+        <span class="sm">written into <span class="num" style="font-size:14px;">dums</span>, so the engine can never propose that name again</span>
+      </div>
+      <div class="loop-row">
+        <span class="pill xs f-peach">Expired</span>
+        <span class="loop-line"></span>
+        <span class="sm">candidate released back to the pool at its score, and unblocked in sibling regions</span>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- =====================================================================
      THE ENGINE: sticky pipeline, scroll drives the rail
@@ -992,10 +1123,6 @@ section{position:relative;}
       </div>
     </div>
 
-    <div data-rv data-d="3" style="margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-      <span class="pill xs f-yellow">Closest comparable: Atom.com</span>
-      <span class="sm" style="opacity:.62;">and it works the aftermarket. Nobody is doing this on available standard inventory, at trend speed.</span>
-    </div>
   </div>
 </section>
 
@@ -1008,32 +1135,14 @@ section{position:relative;}
 <section class="closing" id="end">
   <div class="glow a"></div>
   <div class="wrap" style="position:relative;z-index:2;">
-    <h1 data-rv style="margin:0 auto;max-width:19ch;">
-      Whatever the internet is talking about tomorrow is already findable.
+    <h1 data-rv style="margin:0 auto;max-width:18ch;">
+      Whatever the internet is talking about tomorrow is already a domain.
     </h1>
-    <div data-rv data-d="1" style="margin:30px auto;"><div class="aline" style="margin:0 auto;"></div></div>
-    <div class="label" data-rv data-d="2">Last Level Maniacs</div>
-    <div class="teamgrid" data-rv data-d="3" style="margin-top:20px;max-width:1000px;margin-left:auto;margin-right:auto;">
-      <div class="member" style="text-align:center;padding:16px 10px;box-shadow:5px 5px 0 var(--shadow);">
-        <h3 class="ph" style="font-size:17px;">[Name]</h3>
-        <div class="label" style="margin-top:6px;font-size:10px;">Decision engine</div>
-      </div>
-      <div class="member" style="text-align:center;padding:16px 10px;box-shadow:5px 5px 0 var(--shadow);">
-        <h3 class="ph" style="font-size:17px;">[Name]</h3>
-        <div class="label" style="margin-top:6px;font-size:10px;">Data pipeline</div>
-      </div>
-      <div class="member" style="text-align:center;padding:16px 10px;box-shadow:5px 5px 0 var(--shadow);">
-        <h3 class="ph" style="font-size:17px;">[Name]</h3>
-        <div class="label" style="margin-top:6px;font-size:10px;">Auctions and wallet</div>
-      </div>
-      <div class="member" style="text-align:center;padding:16px 10px;box-shadow:5px 5px 0 var(--shadow);">
-        <h3 class="ph" style="font-size:17px;">[Name]</h3>
-        <div class="label" style="margin-top:6px;font-size:10px;">Board and product</div>
-      </div>
-      <div class="member" style="text-align:center;padding:16px 10px;box-shadow:5px 5px 0 var(--shadow);">
-        <h3 class="ph" style="font-size:17px;">[Name]</h3>
-        <div class="label" style="margin-top:6px;font-size:10px;">Infrastructure</div>
-      </div>
+    <p class="lede" data-rv data-d="1" style="margin:22px auto 0;max-width:44ch;">
+      Somebody just has to find it before the trend does.
+    </p>
+    <div data-rv data-d="2" style="margin:40px auto 0;"><div class="aline" style="margin:0 auto 32px;"></div>
+      <span class="pill lg f-yellow" style="font-size:19px;padding:20px 64px;">Questions</span>
     </div>
   </div>
 </section>
