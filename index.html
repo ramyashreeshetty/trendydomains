@@ -399,6 +399,7 @@ section{position:relative;}
   background:var(--white);padding:5px 16px;font-size:11px;font-weight:600;letter-spacing:.09em;
   text-transform:uppercase;opacity:.65;text-align:center;}
 .browser .frame{border:0;border-radius:0;box-shadow:none;}
+.browser>img{display:block;width:100%;height:auto;}
 
 /* zone headers tinted so supply and demand read apart at a glance */
 .zone.supply .zone-head{background:linear-gradient(180deg,rgba(139,180,247,.22),transparent);
@@ -1056,53 +1057,37 @@ section{position:relative;}
 
 <!-- =====================================================================
      THE EXPERIMENT
-     Deliberately thin: this half gets demoed live. The frame is the
-     fallback if the wifi dies. To fill it, drop img/board.png in and
-     replace the shot-empty block with <img src="img/board.png" alt="...">
+     Thin on purpose: this half gets demoed live. The shot is the real board,
+     and it happens to show a contested lot at six bids.
      ===================================================================== -->
 <section class="chapter fitpage dense" id="bidding" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
-  <div class="wrap">
+  <div class="wrap" style="text-align:center;">
     <div data-rv><span class="pill f-lav">The experiment</span></div>
-    <h1 data-rv data-d="1" style="margin-top:18px;max-width:24ch;">We built the auction to see whether the signal converts.</h1>
+    <h1 data-rv data-d="1" style="margin:16px auto 0;max-width:26ch;">We built the auction to see whether the signal converts.</h1>
 
-    <div class="grid2" style="margin-top:28px;align-items:center;">
-      <div data-rv data-d="2">
-        <div class="browser">
-          <div class="browser-bar"><i></i><i></i><i></i><span class="url">trendydomains.radix.site</span></div>
-          <div class="frame" style="aspect-ratio:16/10;">
-            <div class="shot-empty">
-              <div class="shot-mark">+</div>
-              <div class="h3">Screenshot goes here</div>
-              <div class="label" style="margin-top:8px;">img/board.png</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div data-rv data-d="3">
-        <div class="card" style="box-shadow:6px 6px 0 var(--shadow);">
-          <div class="label">What it runs</div>
-          <p class="sm" style="margin-top:8px;">28 lots across four regions. Funds held rather than spent, a 24-hour anti-snipe clock and a 7-day cap. Slots refill themselves the moment one closes.</p>
-        </div>
-        <div class="card" style="margin-top:14px;box-shadow:6px 6px 0 var(--shadow);background:var(--cream);">
-          <div class="label">The honest read</div>
-          <p class="sm" style="margin-top:8px;">
-            <span class="num" style="font-size:15px;">7</span> names sold, but
-            <span class="num" style="font-size:15px;">9</span> bids across
-            <span class="num" style="font-size:15px;">3</span> people is a demo, not a market. Five of seven
-            closed at the opening price. We have not shown that demand sets the price.
-          </p>
-        </div>
-        <div class="soldgrid" style="margin-top:14px;grid-template-columns:1fr 1fr;">
-          <div class="sold"><span>melbournestadium.host</span><b>$92.99</b></div>
-          <div class="sold"><span>ipogmp.press</span><b>$70.99</b></div>
-          <div class="sold"><span>promptedit.tech</span><b>$49.00</b></div>
-          <div class="sold"><span>retrophoto.fun</span><b>$24.99</b></div>
-        </div>
+    <div data-rv data-d="2" style="margin:22px auto 0;max-width:880px;">
+      <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><span class="url">trendydomains.radix.site</span></div>
+        <img src="img/board.png" alt="The live board, showing a contested lot at six bids">
       </div>
     </div>
 
-    <p data-rv data-d="3" style="margin-top:22px;"><strong>This half is live. Let me show you.</strong></p>
+    <div class="grid3" style="margin-top:22px;text-align:left;gap:13px;">
+      <div class="card" data-rv data-d="3" style="padding:16px 20px;box-shadow:5px 5px 0 var(--shadow);">
+        <div class="label">What it runs</div>
+        <p class="sm" style="margin-top:7px;">28 lots, four regions. Funds held rather than spent, a 24-hour anti-snipe clock, a 7-day cap, slots refilling as they close.</p>
+      </div>
+      <div class="card" data-rv data-d="3" style="padding:16px 20px;box-shadow:5px 5px 0 var(--shadow);background:var(--cream);">
+        <div class="label">The honest read</div>
+        <p class="sm" style="margin-top:7px;">Seven names sold, but nine bids across three people is a demo, not a market. Five of seven closed at the opening price.</p>
+      </div>
+      <div class="card" data-rv data-d="3" style="padding:16px 20px;box-shadow:5px 5px 0 var(--shadow);">
+        <div class="label">What has sold</div>
+        <p class="sm" style="margin-top:7px;">melbournestadium.host $92.99 &middot; ipogmp.press $70.99 &middot; promptedit.tech $49.00 &middot; retrophoto.fun $24.99</p>
+      </div>
+    </div>
+
+    <p data-rv data-d="3" style="margin-top:18px;"><strong>This half is live. Let me show you.</strong></p>
   </div>
 </section>
 
