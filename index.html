@@ -465,6 +465,20 @@ section{position:relative;}
   text-transform:uppercase;opacity:.5;text-align:right;line-height:1.4;flex:none;}
 
 /* ===========================================================================
+   UPLIFT: promo price against what a bidder actually paid
+   =========================================================================== */
+.uplift{display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,46px);
+  margin:24px auto 0;max-width:720px;}
+.up-side{flex:1;background:var(--white);border:2px solid var(--outline);border-radius:26px;
+  padding:clamp(16px,1.8vw,24px);box-shadow:7px 7px 0 var(--shadow);text-align:center;}
+.up-mid{flex:none;}
+.up-mid span{display:flex;align-items:center;justify-content:center;
+  width:clamp(52px,5vw,68px);height:clamp(52px,5vw,68px);border-radius:50%;
+  border:2px solid var(--outline);background:var(--yellow);
+  font-family:var(--f-num);font-variation-settings:"wdth" 112;font-weight:800;
+  font-size:clamp(17px,1.7vw,23px);}
+
+/* ===========================================================================
    TIMELINE: the gap, drawn to scale
    Two bars on one axis. Four hours against ninety days is 0.2%, so the trend
    bar is pinned to a visible minimum and labelled outside. The asymmetry is
@@ -592,9 +606,9 @@ section{position:relative;}
     <div class="teamgrid" data-rv data-d="3">
       <div class="member"><h3>Rohan Jaiswal</h3><div class="label">Builder</div></div>
       <div class="member"><h3>Vaibhav Chauhan</h3><div class="label">Designer</div></div>
-      <div class="member"><h3>Sameer Shaikh</h3><div class="label">Builder</div></div>
+      <div class="member"><h3>Sameer Shaikh</h3><div class="label">Thinker</div></div>
       <div class="member"><h3>Ramyashree Shetty</h3><div class="label">Storyteller</div></div>
-      <div class="member"><h3>Bhavesh Bhide</h3><div class="label">Thinker</div></div>
+      <div class="member"><h3>Bhavesh Bhide</h3><div class="label">Builder</div></div>
     </div>
   </div>
 </section>
@@ -647,7 +661,7 @@ section{position:relative;}
               <img src="img/before.jpg" alt="An ordinary snapshot">
               <img src="img/after.jpg"  alt="The same snapshot restyled as a 1980s portrait">
          Use a photo the team owns. See pitch/README.md. -->
-    <div class="photopair" data-rv data-d="2" style="margin-top:30px;">
+    <div class="photopair" data-rv data-d="2" style="margin-top:22px;">
       <figure class="photo">
         <svg viewBox="0 0 170 190" aria-label="An ordinary snapshot">
           <rect width="170" height="190" fill="#EDEDE6"/>
@@ -699,7 +713,7 @@ section{position:relative;}
       </figure>
     </div>
 
-    <div class="flow-mini center even" data-rv data-d="3" style="margin-top:34px;">
+    <div class="flow-mini center even" data-rv data-d="3" style="margin-top:26px;">
       <div class="node f-yellow">1980s photo prompt chatgpt</div>
       <div class="link"><i class="packet"></i></div>
       <div class="node f-lime">retrophoto.fun</div>
@@ -707,10 +721,19 @@ section{position:relative;}
       <div class="node f-coral">Sold &middot; $24.99</div>
     </div>
 
-    <p data-rv data-d="4" style="margin:34px auto 0;max-width:56ch;">
-      Shortened on meaning, not by deleting spaces. The extension was rated against the category, the name was
-      confirmed unregistered against 12.4 million rows, and then read once more as a finished domain before
-      anyone could see it.
+    <div class="uplift" data-rv data-d="4">
+      <div class="up-side">
+        <div class="num num-md" style="opacity:.45;">$2.99</div>
+        <div class="label" style="margin-top:8px;">What it would have gone for on promotion</div>
+      </div>
+      <div class="up-mid"><span>8&times;</span></div>
+      <div class="up-side">
+        <div class="num num-md" style="color:var(--coral);">$24.99</div>
+        <div class="label" style="margin-top:8px;">What somebody actually paid for it</div>
+      </div>
+    </div>
+    <p data-rv data-d="4" style="margin:22px auto 0;max-width:58ch;">
+      Same name, same extension, same day. The only thing that changed is that somebody knew it was worth having.
     </p>
   </div>
 </section>
@@ -837,7 +860,7 @@ section{position:relative;}
         <div class="fdown"></div>
         <div class="fnode f-coral">Trademark &amp; quality gate</div>
         <div class="fdown"></div>
-        <div class="fnode f-lime">domain_candidates</div>
+        <div class="fnode f-lime">The shortlist</div>
       </div>
 
       <div class="arch-link">
@@ -849,11 +872,11 @@ section{position:relative;}
         <div class="zone-head">
           <span class="pill xs f-peach">Delivery</span>
           <h3 style="margin-top:12px;">Getting it to a buyer</h3>
-          <p class="sm" style="margin-top:6px;">Live. Reads Postgres and nothing else.</p>
+          <p class="sm" style="margin-top:6px;">Live. Answers instantly.</p>
         </div>
         <div class="fnode f-lime">Board &middot; 4 regions &times; 7 slots</div>
         <div class="fdown"></div>
-        <div class="fnode">Bid: escrow hold, row locked</div>
+        <div class="fnode">Bid &middot; funds held, not spent</div>
         <div class="fdown"></div>
         <div class="fnode f-yellow">Clock extends 24h per bid</div>
         <div class="fdown"></div>
@@ -871,7 +894,7 @@ section{position:relative;}
       <div class="loop-row">
         <span class="pill xs f-lime">Won</span>
         <span class="loop-line"></span>
-        <span class="sm">written into <span class="num" style="font-size:14px;">dums</span>, so the engine can never propose that name again</span>
+        <span class="sm">handed back as registered, so the engine can never offer it again</span>
       </div>
       <div class="loop-row">
         <span class="pill xs f-peach">Expired</span>
@@ -904,7 +927,7 @@ section{position:relative;}
             <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 5-7"/><path d="M14 8h4v4"/></svg>
           </div>
           <h3>Sources</h3>
-          <p>Google Trends and X, seven days deep, merged on the normalised keyword. X returns no volume at all: <span class="num" style="font-size:15px;">200</span> rows, every <span class="num" style="font-size:15px;">tweet_volume</span> null. So rank earns its own term and its own quota.</p>
+          <p>Google Trends and X, seven days deep, merged wherever they name the same thing. X tells us position but never how loud, so rank earns its own weighting rather than us inventing a volume for it.</p>
           <div class="stage-foot"><span class="stage-out">Keywords merged</span><span class="num num-md">17,726</span></div>
         </article>
 
@@ -933,7 +956,7 @@ section{position:relative;}
             <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"/><path d="M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z"/></svg>
           </div>
           <h3>Propose names</h3>
-          <p>Shortened semantically, never concatenated. &ldquo;1980s photo prompt chatgpt&rdquo; becomes <strong>retrophoto.fun</strong>. A label over 18 characters, or scoring under 70 on brandability, is rejected before any API call.</p>
+          <p>Shortened semantically, never concatenated. &ldquo;1980s photo prompt chatgpt&rdquo; becomes <strong>retrophoto.fun</strong>. A label over 18 characters, or scoring under 70 on brandability, is rejected before we ask the model anything.</p>
           <div class="stage-drop"><b>Over 18 chars</b><b>Digits</b><b>Hyphens</b></div>
           <div class="stage-foot"><span class="stage-out">Domains proposed</span><span class="num num-md">362</span></div>
         </article>
@@ -963,7 +986,7 @@ section{position:relative;}
             <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h10"/><path d="M6 17l6-6"/><path d="M9 5l6 6"/><path d="M13 1l8 8"/><path d="M11 3l8 8"/></svg>
           </div>
           <h3>Pool &amp; board</h3>
-          <p>Upserted on region and domain, so a name survives its keyword going quiet. Four regions, ten TLDs, <span class="num" style="font-size:15px;">28</span> live right now. The board only ever reads Postgres.</p>
+          <p>Kept per region, so a name survives its keyword going quiet. Four regions, ten TLDs, <span class="num" style="font-size:15px;">28</span> live right now. No outside calls happen while somebody is bidding.</p>
           <div class="stage-drop"><b>98 duplicate domains</b></div>
           <div class="stage-foot"><span class="stage-out">In the pool</span><span class="num num-md">172</span></div>
         </article>
@@ -1059,7 +1082,7 @@ section{position:relative;}
       <div data-rv data-d="3">
         <div class="card" style="box-shadow:6px 6px 0 var(--shadow);">
           <div class="label">What it runs</div>
-          <p class="sm" style="margin-top:8px;">28 lots across four regions. Escrow wallet, row-locked bidding, a 24-hour anti-snipe clock and a 7-day cap. Slots refill themselves the moment one closes.</p>
+          <p class="sm" style="margin-top:8px;">28 lots across four regions. Funds held rather than spent, a 24-hour anti-snipe clock and a 7-day cap. Slots refill themselves the moment one closes.</p>
         </div>
         <div class="card" style="margin-top:14px;box-shadow:6px 6px 0 var(--shadow);background:var(--cream);">
           <div class="label">The honest read</div>
@@ -1086,50 +1109,43 @@ section{position:relative;}
 
 <!-- =====================================================================
      WHERE THIS SHOULD SIT
-     The positioning slide. Says out loud that a registry pre-registering
-     trend names is bad faith, and puts the value in the intelligence layer.
+     A third inventory tier, not a replacement for either of the two that
+     already exist. The reservation is temporary and uses the same allocation
+     the registry already runs for premium.
      ===================================================================== -->
 <section class="chapter fitpage dense" id="business" style="background:var(--white);border-top:2px solid var(--outline);border-bottom:2px solid var(--outline);">
   <div class="wrap">
     <div data-rv><span class="pill f-lav">Where this should sit</span></div>
-    <h1 data-rv data-d="1" style="margin-top:20px;max-width:22ch;">The intelligence is the product. The inventory is not.</h1>
+    <h1 data-rv data-d="1" style="margin-top:18px;max-width:24ch;">A middle tier, where the trend sets the value.</h1>
 
-    <div class="grid3" style="margin-top:34px;">
+    <div class="grid3" style="margin-top:30px;">
       <div class="card" data-rv data-d="1" style="background:var(--cream);">
-        <div class="card-icon f-coral">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </div>
-        <h3>What we are not proposing</h3>
-        <p class="sm" style="margin-top:12px;">
-          A registry registering trending names ahead of the market is warehousing, whatever it is priced at.
-          Holding inventory you created the demand for is bad faith, and an auction run on it has a compliance
-          problem before it has a business problem.
-        </p>
+        <div class="label">Tier one</div>
+        <h3 style="margin-top:8px;">Standard</h3>
+        <p class="sm" style="margin-top:10px;">Millions of names at one flat price. The same on the day the world is searching for a word as on every other day of the year.</p>
       </div>
-      <div class="card" data-rv data-d="2">
-        <div class="card-icon f-lime">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/><path d="M8 11h6M11 8v6"/></svg>
-        </div>
-        <h3>What it actually is</h3>
-        <p class="sm" style="margin-top:12px;">
-          A domain-centric Google Trends. Keyword velocity by region, semantically matched to names that are
-          still free, screened for trademark and brandability, linking out to buy. The registry never touches
-          the name; the buyer registers it themselves.
-        </p>
+      <div class="card" data-rv data-d="2" style="border-width:3px;box-shadow:10px 10px 0 var(--shadow);">
+        <div class="label" style="color:var(--coral);opacity:1;">Tier two &middot; what we are proposing</div>
+        <h3 style="margin-top:8px;">Trend</h3>
+        <p class="sm" style="margin-top:10px;">A small set, reserved only for the window the board runs, through the same allocation the registry already uses for premium. The trend decides which names qualify. <strong>The bidder decides what they are worth.</strong></p>
       </div>
-      <div class="card" data-rv data-d="3">
-        <div class="card-icon f-sky">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg>
-        </div>
-        <h3>What Radix gets</h3>
-        <p class="sm" style="margin-top:12px;">
-          Demand data available nowhere else: which keyword and extension pairings people actually chase, by
-          region, by day. That feeds pricing, marketing and portfolio decisions, with no inventory held and
-          nothing to defend.
-        </p>
+      <div class="card" data-rv data-d="3" style="background:var(--cream);">
+        <div class="label">Tier three</div>
+        <h3 style="margin-top:8px;">Premium</h3>
+        <p class="sm" style="margin-top:10px;">Names worth something every year, priced on evergreen value and revisited on a ninety-day cycle.</p>
       </div>
     </div>
 
+    <div class="grid2" style="margin-top:24px;">
+      <div class="card" data-rv data-d="2">
+        <div class="label">It stays small on purpose</div>
+        <p class="sm" style="margin-top:8px;">Twenty-eight names at a time, held only while the trend is alive. Too small to move standard retail, and every name returns the moment the window closes.</p>
+      </div>
+      <div class="card" data-rv data-d="3">
+        <div class="label">The intelligence is the part that lasts</div>
+        <p class="sm" style="margin-top:8px;">Which keyword and extension pairings people actually chase, by region, by day. That is demand data the registry cannot get anywhere else, and it outlives every individual auction.</p>
+      </div>
+    </div>
   </div>
 </section>
 
